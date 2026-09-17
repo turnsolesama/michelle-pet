@@ -14,6 +14,8 @@ v0.3.1 修订：手指按旋转后的键帽位置同时跟踪横纵坐标，Ctrl
 
 **[下载 v0.3.2 · Windows ZIP](https://github.com/turnsolesama/michelle-pet/releases/download/v0.3.2/MichellePet-v0.3.2-win.zip)** · [版本与校验信息](https://github.com/turnsolesama/michelle-pet/releases/tag/v0.3.2)
 
+**[完整项目 ZIP（源码、素材及程序，约 55 MB）](https://github.com/turnsolesama/michelle-pet/releases/download/v0.3.2/MichellePet-v0.3.2-Full-Project.zip)** · 已下载核对全部文件哈希与 ZIP 完整性。
+
 下载大小 28,942,234 字节；已重新下载核对 SHA-256、ZIP 完整性与包内 EXE。解压后双击 `v0.3.2/MichellePet.exe`。
 
 《卡拉彼丘》米雪儿的个人同人 Windows 桌宠，v0.3.2。双击包内 MichellePet.exe 即可启动，无需安装，依赖 Windows 自带的 .NET Framework 4.x。
