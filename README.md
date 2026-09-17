@@ -1,5 +1,9 @@
 # 米雪儿桌宠
 
+**[下载 v0.2.2 · Windows ZIP](https://github.com/turnsolesama/michelle-pet/releases/download/v0.2.2/MichellePet-v0.2.2-win.zip)** · [版本与校验信息](https://github.com/turnsolesama/michelle-pet/releases/tag/v0.2.2)
+
+下载大小 26,232,476 字节；已重新下载核对 SHA-256、ZIP 完整性与包内 EXE。解压后双击 `v0.2.2/MichellePet.exe`。
+
 《卡拉彼丘》米雪儿的个人同人 Windows 桌宠，v0.2.2。双击包内 MichellePet.exe 即可启动，无需安装，依赖 Windows 自带的 .NET Framework 4.x。
 
 本次修复：从墙边展开后，重新按住拖动可直接返回原侧收纳，无需绕过屏幕中间；同一次拖动也可直接收纳到对面边缘。防止展开后立即吸回的保护只针对刚离开的边缘和当前拖动。保留 v0.2.1 的正立左右贴墙姿势、封闭白底清除与稳定呼吸。
