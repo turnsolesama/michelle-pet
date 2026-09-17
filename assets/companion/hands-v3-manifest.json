@@ -1,0 +1,66 @@
+{
+  "version": "0.3.1",
+  "source": "hands-v3.png",
+  "generator": "built-in image_gen",
+  "prompt": "Create a clean production animation sprite atlas with THREE isolated parts separated into three columns on genuine transparent RGBA. Use reference for the chibi anime art style, pale skin and blue uniform only. Do not draw a character body. All parts face the same camera: viewer faces the girl seated behind a desk, sees backs of her hands from slightly above. LEFT column: a vertical short forearm shaft ONLY, rounded royal-blue rolled sleeve at TOP, pale forearm and black/gold/cyan wristband at BOTTOM, NO hand or fingers. CENTER column: anatomical LEFT hand for tapping a keyboard, wrist at TOP and fingers towards BOTTOM, black fingerless glove with cyan back-of-hand accent, small chibi proportions, relaxed curved fingers. Its thumb is clearly on the VIEWER'S LEFT, four distinct fingers (index, middle, ring, pinky) extend toward bottom in a gentle arc. RIGHT column: anatomical RIGHT hand resting naturally on a charcoal gaming mouse. Wrist at TOP, fingers point toward BOTTOM, thumb on the VIEWER'S RIGHT side of mouse (opposite handedness to center). Index finger on viewer-right main button, middle finger on viewer-left main button; wheel between these two; ring and little fingers wrap naturally around viewer-left outside edge. Exactly five anatomically correct digits, no extra or missing fingers. Mouse shell visible around fingers, cyan thin accent, palm supported, wrist neutral; not dangling, not clawing or gripping the front edge. Both HANDS have IDENTICAL palm width and matching wrist width, same scale, line weight, short cute finger proportions and lighting; the mouse must not inflate the size of the right hand. Black fingerless glove ends at finger bases, exposed fingers clearly separated. Forearm shaft is designed to meet either hand wrist when composited. Each sprite complete and isolated with broad transparent space around it, no text, no labels, no table, no body, no background, no checkerboard pixels. Landscape atlas, three columns.",
+  "size": [
+    1774,
+    887
+  ],
+  "alpha": "original RGBA preserved",
+  "parts": {
+    "forearm": {
+      "crop": [
+        170,
+        110,
+        340,
+        550
+      ],
+      "elbow": [
+        160,
+        170
+      ],
+      "wrist": [
+        160,
+        520
+      ],
+      "widthScale": 0.09
+    },
+    "leftKeyboardHand": {
+      "crop": [
+        680,
+        470,
+        390,
+        335
+      ],
+      "wrist": [
+        220,
+        10
+      ],
+      "indexContact": [
+        134,
+        274
+      ],
+      "fixedScale": 0.09
+    },
+    "rightMouseHand": {
+      "crop": [
+        1300,
+        470,
+        370,
+        380
+      ],
+      "wrist": [
+        180,
+        10
+      ],
+      "contact": [
+        180,
+        250
+      ],
+      "fixedScale": 0.09
+    }
+  },
+  "keyboardTracking": "Actual rotated cap center in both axes; most recent still-held/recent-tap key; no weighted average or short reach clamp",
+  "anatomy": "Front view, anatomical left keyboard thumb toward viewer left, anatomical right mouse thumb toward viewer right. Both thumbs inward."
+}

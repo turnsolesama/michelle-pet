@@ -1,0 +1,78 @@
+{
+  "version": "0.3.0",
+  "generator": "built-in image_gen",
+  "source": "classic-atlas.png",
+  "size": [
+    1536,
+    1024
+  ],
+  "alpha": "generated RGBA preserved; no white removal",
+  "reference": "../skins/classic/idle.png",
+  "prompt": "Production 2D game animation sprite atlas on genuine transparent RGBA background. Use reference ONLY for character identity and rendering style: Michelle from Strinova, blonde long twin ponytails, blue eyes, black cat-ear gaming headphones with microphone, royal blue short jacket, white collared shirt, black and cyan necktie, golden bell, black fingerless gloves. Create new chibi waist-up seated gamer character, frontal slightly overhead view, cheerful concentrated small smile. ATLAS arranged in TWO equal columns. LEFT HALF occupies full height: a complete upper body sprite including head, hair, torso, jacket and upper arms ONLY. Upper arms angle outward and end at rolled short sleeves near waist. NO forearms, NO hands on this base. Waist terminates flat below belt, no legs. NO table/keyboard/mouse. Ponytails curl gently alongside torso. RIGHT HALF contains TWO detached forearm-and-hand sprites separated vertically with ample transparent margins: top is forearm emerging from upper-left and pointing down-right, palm down black fingerless gloved hand with relaxed curved fingers poised to tap a keyboard; bottom is forearm emerging from upper-right pointing down-left with gloved hand cupped over an invisible computer mouse. Forearms are short, pale skin and matching black/gold/blue wristbands. Same orthographic scale and lighting as body. Each detached arm starts with full rounded elbow hidden later beneath base sleeve. Crisp high quality anime chibi cel shading and thin dark line art matching reference. No labels, no text, no panel borders, no shadow rectangle, NO white background, NO checkerboard pixels. All empty spaces including between hair and torso are fully alpha transparent. Atlas landscape 3:2 aspect ratio, base body confined left half, two forearms confined right half, no overlap between the three sprites.",
+  "parts": {
+    "body": {
+      "crop": [
+        0,
+        0,
+        1055,
+        1024
+      ],
+      "bounds": [
+        52,
+        0,
+        290,
+        281.5
+      ]
+    },
+    "keyboardArm": {
+      "crop": [
+        1055,
+        200,
+        481,
+        400
+      ],
+      "flipX": true,
+      "cuff": [
+        401,
+        118
+      ],
+      "finger": [
+        156,
+        310
+      ],
+      "placedCuff": [
+        266,
+        217
+      ],
+      "restFinger": [
+        237,
+        255
+      ]
+    },
+    "mouseArm": {
+      "crop": [
+        1090,
+        620,
+        446,
+        404
+      ],
+      "flipX": true,
+      "cuff": [
+        96,
+        90
+      ],
+      "finger": [
+        316,
+        305
+      ],
+      "placedCuff": [
+        132,
+        214
+      ],
+      "restFinger": [
+        140,
+        261
+      ]
+    }
+  }
+}

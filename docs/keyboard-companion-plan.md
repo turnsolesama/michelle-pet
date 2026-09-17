@@ -1,6 +1,16 @@
 # 米雪儿键鼠联动与 Live2D 制作方案
 
-2026-09-17。当前应用为 WinForms 透明窗与图片动画，未包含 Live2D 模型。本文件为方案，尚未新增监听、安装软件或修改运行版本。实现路线和键位待本次用户选择。
+v0.3.2：未单独画出的字母、数字和常用编辑/符号键触发通用敲击；仅保留短时动作脉冲与三处轮换位置，不读取输入文本、不保存键值历史。WASD 等专用游戏键继续精确定位。
+
+v0.3.1：键盘手按旋转后的键帽中心移动，组合键优先跟随最近按下且仍有效的键；鼠标手与键盘手改为同尺度独立手掌，前臂单独连接。手掌不再随伸手距离缩放。源图和支点见 assets/companion/hands-v3-manifest.json；经典制服仍是分层 2D，尚未逐手指绑定。
+
+2026-09-17 更新：v0.3.0 已完成经典制服的分层键鼠版，下面保留后续 Live2D 与软件路线。当前是 WinForms 原生透明窗、固定身体与两只独立前臂；整只手按压与小范围移位，未做逐手指网格或 Live2D 模型。没有安装额外制作软件。
+
+入口：右键 → 游戏搭子 · 经典制服，另有“键鼠联动”开关。W/A/S/D、Q/E/R/F、Shift/Ctrl/空格和鼠标相对移动、左右键已接通。Raw Input 仅维护指定游戏按键当前状态与短时动画进度；退出/关闭/暂停时注销，菜单与拖动期间暂时停止读取，不生成按键日志。后台普通窗口验收通过，游戏兼容性待实机体验。
+
+实现依据：[RegisterRawInputDevices](https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-registerrawinputdevices)、[RAWKEYBOARD](https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-rawkeyboard)、[RAWMOUSE](https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-rawmouse)。图集保留生成 Alpha，原图/提示词/裁切/支点见 assets/companion；键盘为程序绘制，头和身体像素在组合输入前后保持一致。
+
+游戏搭子支持自由摆放：松手原地停留，不自动下落或吸附屏幕边缘；点击反馈也不改变位置。普通桌宠的落地与收纳保持原样。键盘按人物朝向旋转 180°，空格靠近角色，鼠标手替换为手掌搭在鼠标上的姿势。
 
 ## 可见效果
 

@@ -10,7 +10,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Reflection;
 [assembly: AssemblyTitle("米雪儿桌宠")]
-[assembly: AssemblyVersion("0.2.2.0")]
+[assembly: AssemblyVersion("0.3.2.0")]
 namespace CodexPet
 {
     internal static class Program
@@ -23,7 +23,14 @@ namespace CodexPet
             using(Mutex mutex=new Mutex(true,check?"MichellePet.Check":"MichellePet.Local.v1",out created))
             {
                 if(!created)return;
-                try { using(Pet pet=new Pet(check,args.Length>1?args[1]:null)) Application.Run(pet); }
+                try
+                {
+                    using(Pet pet=new Pet(check,args.Length>1?args[1]:null))
+                    {
+                        if(!check && Array.IndexOf(args,"--companion")>=0)pet.Shown+=delegate{pet.SetCompanion(true);};
+                        Application.Run(pet);
+                    }
+                }
                 catch(Exception error)
                 {
                     if(check) { if(args.Length>1){Directory.CreateDirectory(args[1]);File.WriteAllText(Path.Combine(args[1],"FAILED.txt"),error.ToString());} Environment.ExitCode=1; }
@@ -42,6 +49,10 @@ namespace CodexPet
         readonly ContextMenuStrip menu=new ContextMenuStrip();
         readonly Stopwatch elapsed=Stopwatch.StartNew();
         readonly Queue<Action> checks=new Queue<Action>();
+        readonly CompanionInput companionInput=new CompanionInput();
+        CompanionRenderer companionRenderer;
+        bool companion,linked=true;
+        string previousSkin="classic";
         readonly bool diagnostic;
         readonly string evidence;
         Bitmap frame; Icon petIcon;
@@ -70,6 +81,9 @@ namespace CodexPet
             }
             Icon=petIcon;tray.Icon=petIcon;tray.Text="米雪儿桌宠 · 双击唤回";tray.Visible=!check;
             tray.ContextMenuStrip=menu;tray.DoubleClick+=delegate{Home();Say("我在这里喵！");};
+            ToolStripMenuItem game=new ToolStripMenuItem("游戏搭子 · 经典制服");game.Click+=delegate{SetCompanion(!companion);};menu.Items.Add(game);
+            ToolStripMenuItem link=new ToolStripMenuItem("键鼠联动");link.Click+=delegate{linked=!linked;UpdateInput();Render();};menu.Items.Add(link);
+            menu.Items.Add(new ToolStripSeparator());
             menu.Items.Add("摸摸头",null,delegate{Say("嘿嘿，今天也一起加油！");});
             menu.Items.Add("轻轻跳一下",null,delegate{Jump();});
             ToolStripMenuItem sleep=new ToolStripMenuItem("睡一会儿");sleep.Click+=delegate{if(motion==Motion.Sleep)Say("睡醒啦，一起出发！");else Sleep();};menu.Items.Add(sleep);
@@ -81,32 +95,69 @@ namespace CodexPet
             edges.DropDownItems.Add("左侧贴墙探头",null,delegate{DockAt(-1,Work,Top+Height/2);});
             edges.DropDownItems.Add("右侧贴墙探头",null,delegate{DockAt(1,Work,Top+Height/2);});menu.Items.Add(edges);
             ToolStripMenuItem expand=new ToolStripMenuItem("展开全身");expand.Click+=delegate{Expand();};menu.Items.Add(expand);
-            ToolStripMenuItem pause=new ToolStripMenuItem("暂停动画"){CheckOnClick=true};pause.Click+=delegate{paused=pause.Checked;};menu.Items.Add(pause);
+            ToolStripMenuItem pause=new ToolStripMenuItem("暂停动画"){CheckOnClick=true};pause.Click+=delegate{paused=pause.Checked;UpdateInput();};menu.Items.Add(pause);
             ToolStripMenuItem top=new ToolStripMenuItem("保持置顶"){Checked=true,CheckOnClick=true};top.Click+=delegate{TopMost=top.Checked;};menu.Items.Add(top);
             menu.Items.Add("回到右下角",null,delegate{Home();});menu.Items.Add(new ToolStripSeparator());menu.Items.Add("退出桌宠",null,delegate{Close();});
             menu.Opening+=delegate
             {
                 sleep.Text=motion==Motion.Sleep?"醒来啦":"睡一会儿";pause.Checked=paused;expand.Visible=motion==Motion.Docked;
+                game.Checked=companion;link.Checked=linked;link.Enabled=companion;
+                companionInput.Disable();
                 foreach(ToolStripMenuItem i in wardrobe.DropDownItems)i.Checked=(string)i.Tag==skin;
                 foreach(ToolStripMenuItem i in sizes.DropDownItems)i.Checked=(int)i.Tag==petHeight;
             };
+            menu.Closed+=delegate{UpdateInput();};
             ContextMenuStrip=menu;timer.Interval=33;timer.Tick+=Tick;
             Shown+=delegate{Home();if(diagnostic)SetupChecks();lastTick=elapsed.Elapsed.TotalSeconds;timer.Start();};
         }
-        int FullWidth {get{return (int)Math.Round(petHeight*.86)+2*Pad;}}
+        int FullWidth {get{return (int)Math.Round(petHeight*(companion?4.0/3:.86))+2*Pad;}}
         int FullHeight {get{return petHeight+2*Pad+BubbleHeight;}}
         Rectangle Work {get{return motion==Motion.Docked?dockArea:Screen.FromPoint(new Point(Left+Width/2,Top+Height/2)).WorkingArea;}}
         int Floor {get{return Work.Bottom-FullHeight+Pad;}}
+        internal void SetCompanion(bool enabled)
+        {
+            if(companion==enabled)return;
+            if(motion==Motion.Docked)Expand();
+            Rectangle area=Work;int center=Left+Width/2,bottom=Top+Height-Pad;
+            ClearMovement();motion=Motion.Idle;paused=false;
+            if(enabled){previousSkin=skin;skin="classic";if(companionRenderer==null)companionRenderer=new CompanionRenderer();}
+            else skin=previousSkin;
+            companion=enabled;Render();
+            Location=new Point(Clamp(center-Width/2,area.Left,area.Right-Width),Clamp(bottom-Height+Pad,area.Top,area.Bottom-Height+Pad));
+            preciseY=Top;motion=!companion && Top<Floor?Motion.Fall:Motion.Idle;UpdateInput();
+        }
+        void UpdateInput()
+        {
+            bool active=companion && linked && !paused && !held && !menu.Visible;
+            if(active && !companionInput.Enabled)
+            {
+                try{companionInput.Enable(Handle);}
+                catch(System.ComponentModel.Win32Exception error)
+                {
+                    linked=false;words="键鼠联动未能启动，请重新开启";responseUntil=time+4;
+                    if(diagnostic)throw;
+                    tray.ShowBalloonTip(4000,"键鼠联动未启动",error.Message,ToolTipIcon.Warning);
+                }
+            }
+            else if(!active)companionInput.Disable();
+        }
+        protected override void WndProc(ref Message message)
+        {
+            if(message.Msg==0xFF && companionInput!=null)companionInput.Read(message.LParam);
+            base.WndProc(ref message); // DefWindowProc releases foreground WM_INPUT resources.
+        }
         void ClearMovement(){held=moved=dockDrag=false;Capture=false;velocity=0;jumpUntil=responseUntil=0;}
         void Home()
         {
             ClearMovement();motion=Motion.Idle;paused=false;suppressDock=false;
             Rectangle area=Screen.FromPoint(Cursor.Position).WorkingArea;
             Location=new Point(area.Right-FullWidth-40,area.Bottom-FullHeight+Pad);preciseY=Top;Render();
+            UpdateInput();
         }
         void SetSkin(string value)
         {
             if(Array.IndexOf(Skins,value)<0)throw new ArgumentException("Unknown skin");
+            if(companion)SetCompanion(false);
             int center=Top+Height/2;skin=value;Render();if(motion==Motion.Docked)PlaceDock(center);
         }
         void ResizePet(int size)
@@ -115,19 +166,21 @@ namespace CodexPet
             petHeight=size;Render();
             if(motion==Motion.Docked){PlaceDock(centerY);return;}
             Location=new Point(Clamp(centerX-Width/2,area.Left,area.Right-Width),Clamp(bottom-Height+Pad,area.Top,area.Bottom-Height+Pad));
-            preciseY=Top;velocity=0;if(motion!=Motion.Sleep)motion=Top<Floor?Motion.Fall:Motion.Idle;
+            preciseY=Top;velocity=0;if(motion!=Motion.Sleep)motion=!companion && Top<Floor?Motion.Fall:Motion.Idle;
         }
         static int Clamp(int n,int low,int high){return Math.Max(low,Math.Min(Math.Max(low,high),n));}
         void Ground()
         {
             if(motion==Motion.Docked)Expand();
-            ClearMovement();motion=Motion.Idle;Top=Floor;preciseY=Top;paused=false;
+            ClearMovement();motion=Motion.Idle;if(!companion)Top=Floor;preciseY=Top;paused=false;
+            UpdateInput();
         }
         void Say(string line){Ground();words=line;responseUntil=time+2.8;Render();}
         void Jump(){Say("喵，出发！");jumpUntil=time+.65;}
-        void Sleep(){Ground();motion=Motion.Sleep;Render();}
+        void Sleep(){if(companion)SetCompanion(false);Ground();motion=Motion.Sleep;Render();}
         void DockAt(int which,Rectangle area,int center)
         {
+            if(companion)SetCompanion(false);
             ClearMovement();motion=Motion.Docked;side=which;dockArea=area;dockStarted=time;paused=false;Render();PlaceDock(center);
         }
         void PlaceDock(int center)
@@ -143,6 +196,7 @@ namespace CodexPet
         void BeginDrag(Point p)
         {
             press=p;origin=Location;held=true;moved=false;dockDrag=motion==Motion.Docked;paused=false;velocity=0;
+            UpdateInput();
             // An intentional new drag must be able to return to either edge without a detour.
             if(!dockDrag)suppressDock=false;
             if(motion==Motion.Sleep)motion=Motion.Idle;
@@ -177,6 +231,7 @@ namespace CodexPet
             if(wasDock){if(!wasMoved)Expand();return;}
             if(wasMoved)ReleasePet(p);
             else if(localY>BubbleHeight+petHeight*.8)Jump();else Say("嘿嘿，摸摸头就有精神啦！");
+            UpdateInput();
         }
         protected override void OnMouseDown(MouseEventArgs e){base.OnMouseDown(e);if(e.Button==MouseButtons.Left){BeginDrag(Cursor.Position);Capture=true;}}
         protected override void OnMouseMove(MouseEventArgs e){base.OnMouseMove(e);MoveDrag(Cursor.Position);}
@@ -184,11 +239,17 @@ namespace CodexPet
         protected override void OnMouseCaptureChanged(EventArgs e)
         {
             base.OnMouseCaptureChanged(e);
-            if(!Capture && held){bool dock=motion==Motion.Docked;held=moved=dockDrag=false;if(!dock)ReleasePet(Cursor.Position);}
+            if(!Capture && held){bool dock=motion==Motion.Docked;held=moved=dockDrag=false;if(!dock)ReleasePet(Cursor.Position);UpdateInput();}
         }
         void ReleasePet(Point p)
         {
             Rectangle area=Screen.FromPoint(p).WorkingArea;
+            if(companion)
+            {
+                // The desk is an overlay: release exactly where placed, with no gravity or edge snap.
+                Location=new Point(Clamp(Left,area.Left,area.Right-Width),Clamp(Top,area.Top,area.Bottom-Height+Pad));
+                preciseY=Top;velocity=0;motion=Motion.Idle;Render();return;
+            }
             int distance=Math.Max(20,(int)(petHeight*.12));
             int candidate=Left<=area.Left+distance?-1:Right>=area.Right-distance?1:0;
             bool blocked=suppressDock && candidate==suppressedSide && area==suppressedArea;
@@ -205,7 +266,8 @@ namespace CodexPet
                 if(!paused)
                 {
                     time+=dt;
-                    if(motion==Motion.Fall && !held)
+                    if(companion)companionInput.Advance(dt,!diagnostic);
+                    if(motion==Motion.Fall && !held && !companion)
                     {velocity+=1650*dt;preciseY+=velocity*dt;if(preciseY>=Floor){preciseY=Floor;velocity=0;motion=Motion.Idle;}Top=(int)Math.Round(preciseY);}
                     Render();
                 }
@@ -236,7 +298,8 @@ namespace CodexPet
                 else
                 {
                     double lift=time<jumpUntil?Math.Sin((.65-(jumpUntil-time))/.65*Math.PI)*25:0;
-                    g.DrawImage(sprite,BodyRectangle(sprite,width,height,sleep,lift));
+                    if(companion)companionRenderer.Draw(g,new RectangleF(Pad,height-Pad-petHeight,width-2*Pad,petHeight),companionInput);
+                    else g.DrawImage(sprite,BodyRectangle(sprite,width,height,sleep,lift));
                     if((time<responseUntil||sleep) && !held)
                     {
                         Rectangle bubble=new Rectangle(2,4,width-4,36);
@@ -262,7 +325,7 @@ namespace CodexPet
         void SetupChecks()
         {
             if(String.IsNullOrEmpty(evidence))throw new ArgumentException("--check requires an output directory");
-            Directory.CreateDirectory(evidence);File.WriteAllText(Path.Combine(evidence,"checks.txt"),"MichellePet 0.2.2 / "+Environment.OSVersion+Environment.NewLine);
+            Directory.CreateDirectory(evidence);File.WriteAllText(Path.Combine(evidence,"checks.txt"),"MichellePet 0.3.2 / "+Environment.OSVersion+Environment.NewLine);
             checks.Enqueue(delegate{bank.VerifyMasks(Assert);});
             foreach(string value in Skins)
             {
@@ -296,6 +359,25 @@ namespace CodexPet
             for(int i=0;i<5;i++)checks.Enqueue(delegate{});
             checks.Enqueue(delegate{Assert(motion==Motion.Idle && velocity==0 && Top==Floor,"fall settles at floor");stable=Location;});
             for(int i=0;i<4;i++)checks.Enqueue(delegate{});
+            checks.Enqueue(delegate
+            {
+                Home();SetSkin("magic");SetCompanion(true);responseUntil=0;
+                Assert(companion && skin=="classic" && companionInput.Enabled,"companion enables classic pose and background input");
+                Render();CaptureEvidence("companion-idle");stable=Location;
+                foreach(int key in new int[]{16,17,32}){companionInput.Reset();companionInput.SetKey(key,true);Render();CaptureEvidence("companion-key-"+key);}companionInput.Reset();
+                companionInput.SetKey(0x50,true);Render();CaptureEvidence("companion-typing");companionInput.Reset();
+                companionInput.SetKey(0x57,true);companionInput.SetKey(0x10,true);companionInput.SetMouse(180,-60,1);Render();
+                Assert(companionInput.IsDown(0) && companionInput.IsDown(8) && companionInput.LeftButton,"W Shift mouse together");
+                CaptureEvidence("companion-combo");Assert(Location==stable,"companion input keeps native window fixed");
+                companionInput.SetKey(0x57,false);Assert(!companionInput.IsDown(0) && companionInput.IsDown(8),"releasing W preserves Shift");
+                linked=false;UpdateInput();Assert(!companionInput.Enabled && !companionInput.IsDown(8) && !companionInput.LeftButton,"disabling link clears and unregisters input");
+                linked=true;UpdateInput();SetCompanion(false);Assert(skin=="magic" && !companionInput.Enabled,"leaving companion restores prior outfit and unregisters input");
+                SetCompanion(true);Sleep();Assert(!companion && motion==Motion.Sleep && !companionInput.Enabled,"sleep exits companion");
+                SetCompanion(true);DockAt(1,Work,Top+Height/2);Assert(!companion && motion==Motion.Docked && !companionInput.Enabled,"dock exits companion");
+                Home();SetCompanion(true);paused=true;UpdateInput();Assert(!companionInput.Enabled,"pause suspends input");paused=false;UpdateInput();
+                foreach(int size in new int[]{160,360,240}){ResizePet(size);Assert(Top+Height-Pad==Work.Bottom,"companion floor anchor "+size);Render();CaptureEvidence("companion-size-"+size);}
+                SetCompanion(false);Home();stable=Location;
+            });
             checks.Enqueue(delegate
             {
                 Assert(Location==stable,"landed native position stable");foreach(int size in new int[]{160,360,240}){ResizePet(size);Assert(Top+Height-Pad==Work.Bottom,"full-size ground anchor "+size);}
@@ -336,7 +418,7 @@ namespace CodexPet
             protected override bool ShowWithoutActivation {get{return true;}}
         }
         protected override void Dispose(bool disposing)
-        {if(disposing){timer.Stop();timer.Dispose();tray.Visible=false;tray.Dispose();menu.Dispose();if(frame!=null)frame.Dispose();bank.Dispose();if(petIcon!=null)petIcon.Dispose();}base.Dispose(disposing);}
+        {if(disposing){timer.Stop();timer.Dispose();companionInput.Dispose();if(companionRenderer!=null)companionRenderer.Dispose();tray.Visible=false;tray.Dispose();menu.Dispose();if(frame!=null)frame.Dispose();bank.Dispose();if(petIcon!=null)petIcon.Dispose();}base.Dispose(disposing);}
     }
 }
 
