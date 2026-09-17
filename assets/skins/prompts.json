@@ -1,0 +1,71 @@
+{
+  "tool": "built-in image_gen",
+  "date": "2026-09-16",
+  "prompts": [
+    {
+      "skin": "classic",
+      "pose": "grip",
+      "prompt": "Edit attached Michelle desktop-pet sprite. Identity, face, hair, costume, jewelry and colors must stay exactly this same outfit. Same polished chibi anime illustration style. Create a desktop edge peek sprite: HEAD, SHORT CONNECTED NECK, COLLAR AND A LITTLE SHOULDERS ONLY, with TWO hands with short visible forearms curled over an INVISIBLE straight HORIZONTAL LEDGE below the collar. Both hands on same horizontal baseline near image bottom, thumb behind ledge, fingertips curled down slightly. Body hidden below ledge. Head upright, open friendly eyes. Twin tails cropped naturally at same bottom ledge baseline; do not include long hanging tails below hands. Do not draw the ledge itself, no line, no table. This sprite will be rotated sideways for gripping screen edges. Ensure neck and shoulders anatomically connected, no floating head or hands. Pure solid white #FFFFFF background, including all gaps, no cast shadow, no checkerboard, no lettering, no weapons, no new accessories. Single character sprite with modest margins."
+    },
+    {
+      "skin": "dessert",
+      "pose": "idle",
+      "prompt": "Single production desktop pet sprite. Image 1 is the exact chibi style/face/body proportion/standing pose reference. Other images are OFFICIAL COSTUME references for Michelle from Strinova. Dress the Image 1 character in this official skin: 甜点美梦: pink-and-cream layered dessert dress with cherry choker, bows, mint green cat-ear headset, whipped cream/cherry/wafer hair decorations, chocolate long gloves, candy sprinkles and cookie ornaments. Matching pink dessert ankle shoes with mint accents. Preserve her identity, golden twin tails and blue eyes, consistent polished anime cel-shading. Standing full-body, friendly small smile BOTH EYES OPEN, hands relaxed away from sides, no weapons, no text, no extra characters, no background objects, no shadow. Entire hair/shoes within canvas. Pure solid white #FFFFFF background including gaps. One character only; match Image 1 body proportions and stance. This is a costume conversion, not a poster. Make outfit closely match the official reference."
+    },
+    {
+      "skin": "dessert",
+      "pose": "happy",
+      "prompt": "Edit attached Michelle desktop-pet sprite. Identity, face, hair, costume, jewelry and colors must stay exactly this same outfit. Same polished chibi anime illustration style. Change ONLY face expression to joyful closed eyes and small open smiling mouth. Keep all framing, body pose and size EXACTLY the same. Pure solid white #FFFFFF background, including all gaps, no cast shadow, no checkerboard, no lettering, no weapons, no new accessories. Single character sprite with modest margins."
+    },
+    {
+      "skin": "dessert",
+      "pose": "sleep",
+      "prompt": "Edit attached Michelle desktop-pet sprite. Identity, face, hair, costume, jewelry and colors must stay exactly this same outfit. Same polished chibi anime illustration style. Change to a compact seated sleeping pose, folded legs, relaxed hands on knees, gently tilted head and closed peaceful eyes, small relaxed closed mouth. Full body and shoes visible. Pure solid white #FFFFFF background, including all gaps, no cast shadow, no checkerboard, no lettering, no weapons, no new accessories. Single character sprite with modest margins."
+    },
+    {
+      "skin": "dessert",
+      "pose": "grip",
+      "prompt": "Edit attached Michelle desktop-pet sprite. Identity, face, hair, costume, jewelry and colors must stay exactly this same outfit. Same polished chibi anime illustration style. Create a desktop edge peek sprite: HEAD, SHORT CONNECTED NECK, COLLAR AND A LITTLE SHOULDERS ONLY, with TWO hands with short visible forearms curled over an INVISIBLE straight HORIZONTAL LEDGE below the collar. Both hands on same horizontal baseline near image bottom, thumb behind ledge, fingertips curled down slightly. Body hidden below ledge. Head upright, open friendly eyes. Twin tails cropped naturally at same bottom ledge baseline; do not include long hanging tails below hands. Do not draw the ledge itself, no line, no table. This sprite will be rotated sideways for gripping screen edges. Ensure neck and shoulders anatomically connected, no floating head or hands. Pure solid white #FFFFFF background, including all gaps, no cast shadow, no checkerboard, no lettering, no weapons, no new accessories. Single character sprite with modest margins."
+    },
+    {
+      "skin": "heart",
+      "pose": "idle",
+      "prompt": "Single production desktop pet sprite. Image 1 is the exact chibi style/face/body proportion/standing pose reference. Other images are OFFICIAL COSTUME references for Michelle from Strinova. Dress the Image 1 character in this official skin: 桃心卫士: hot pink cropped jacket, gold trim and lining, white shirt, pink tie, black shorts and split skirt panels with pink diamond patterned borders, pink-and-gold cat-ear headset, white forearm sleeves, black gloves. Black boots with pink accents. Preserve her identity, golden twin tails and blue eyes, consistent polished anime cel-shading. Standing full-body, friendly small smile BOTH EYES OPEN, hands relaxed away from sides, no weapons, no text, no extra characters, no background objects, no shadow. Entire hair/shoes within canvas. Pure solid white #FFFFFF background including gaps. One character only; match Image 1 body proportions and stance. This is a costume conversion, not a poster. Make outfit closely match the official reference."
+    },
+    {
+      "skin": "heart",
+      "pose": "happy",
+      "prompt": "Edit attached Michelle desktop-pet sprite. Identity, face, hair, costume, jewelry and colors must stay exactly this same outfit. Same polished chibi anime illustration style. Change ONLY face expression to joyful closed eyes and small open smiling mouth. Keep all framing, body pose and size EXACTLY the same. Pure solid white #FFFFFF background, including all gaps, no cast shadow, no checkerboard, no lettering, no weapons, no new accessories. Single character sprite with modest margins."
+    },
+    {
+      "skin": "heart",
+      "pose": "sleep",
+      "prompt": "Edit attached Michelle desktop-pet sprite. Identity, face, hair, costume, jewelry and colors must stay exactly this same outfit. Same polished chibi anime illustration style. Change to a compact seated sleeping pose, folded legs, relaxed hands on knees, gently tilted head and closed peaceful eyes, small relaxed closed mouth. Full body and shoes visible. Pure solid white #FFFFFF background, including all gaps, no cast shadow, no checkerboard, no lettering, no weapons, no new accessories. Single character sprite with modest margins."
+    },
+    {
+      "skin": "heart",
+      "pose": "grip",
+      "prompt": "Edit attached Michelle desktop-pet sprite. Identity, face, hair, costume, jewelry and colors must stay exactly this same outfit. Same polished chibi anime illustration style. Create a desktop edge peek sprite: HEAD, SHORT CONNECTED NECK, COLLAR AND A LITTLE SHOULDERS ONLY, with TWO hands with short visible forearms curled over an INVISIBLE straight HORIZONTAL LEDGE below the collar. Both hands on same horizontal baseline near image bottom, thumb behind ledge, fingertips curled down slightly. Body hidden below ledge. Head upright, open friendly eyes. Twin tails cropped naturally at same bottom ledge baseline; do not include long hanging tails below hands. Do not draw the ledge itself, no line, no table. This sprite will be rotated sideways for gripping screen edges. Ensure neck and shoulders anatomically connected, no floating head or hands. Pure solid white #FFFFFF background, including all gaps, no cast shadow, no checkerboard, no lettering, no weapons, no new accessories. Single character sprite with modest margins."
+    },
+    {
+      "skin": "magic",
+      "pose": "idle",
+      "prompt": "Single production desktop pet sprite. Image 1 is the exact chibi style/face/body proportion/standing pose reference. Other images are OFFICIAL COSTUME references for Michelle from Strinova. Dress the Image 1 character in this official skin: 绮星梦使: navy/lavender magical girl layered dress, pale lilac fur-trimmed short capelet and skirt, large blue bows and star ornaments, white/lavender cat-ear head decorations, golden-blonde twin tails with iridescent ends, lavender thigh-high stockings with white star patterns, white furry ankle boots. No original police jacket or headset. Preserve her identity, golden twin tails and blue eyes, consistent polished anime cel-shading. Standing full-body, friendly small smile BOTH EYES OPEN, hands relaxed away from sides, no weapons, no text, no extra characters, no background objects, no shadow. Entire hair/shoes within canvas. Pure solid white #FFFFFF background including gaps. One character only; match Image 1 body proportions and stance. This is a costume conversion, not a poster. Make outfit closely match the official reference."
+    },
+    {
+      "skin": "magic",
+      "pose": "happy",
+      "prompt": "Edit attached Michelle desktop-pet sprite. Identity, face, hair, costume, jewelry and colors must stay exactly this same outfit. Same polished chibi anime illustration style. Change ONLY face expression to joyful closed eyes and small open smiling mouth. Keep all framing, body pose and size EXACTLY the same. Pure solid white #FFFFFF background, including all gaps, no cast shadow, no checkerboard, no lettering, no weapons, no new accessories. Single character sprite with modest margins."
+    },
+    {
+      "skin": "magic",
+      "pose": "sleep",
+      "prompt": "Edit attached Michelle desktop-pet sprite. Identity, face, hair, costume, jewelry and colors must stay exactly this same outfit. Same polished chibi anime illustration style. Change to a compact seated sleeping pose, folded legs, relaxed hands on knees, gently tilted head and closed peaceful eyes, small relaxed closed mouth. Full body and shoes visible. Pure solid white #FFFFFF background, including all gaps, no cast shadow, no checkerboard, no lettering, no weapons, no new accessories. Single character sprite with modest margins."
+    },
+    {
+      "skin": "magic",
+      "pose": "grip",
+      "prompt": "Edit attached Michelle desktop-pet sprite. Identity, face, hair, costume, jewelry and colors must stay exactly this same outfit. Same polished chibi anime illustration style. Create a desktop edge peek sprite: HEAD, SHORT CONNECTED NECK, COLLAR AND A LITTLE SHOULDERS ONLY, with TWO hands with short visible forearms curled over an INVISIBLE straight HORIZONTAL LEDGE below the collar. Both hands on same horizontal baseline near image bottom, thumb behind ledge, fingertips curled down slightly. Body hidden below ledge. Head upright, open friendly eyes. Twin tails cropped naturally at same bottom ledge baseline; do not include long hanging tails below hands. Do not draw the ledge itself, no line, no table. This sprite will be rotated sideways for gripping screen edges. Ensure neck and shoulders anatomically connected, no floating head or hands. Pure solid white #FFFFFF background, including all gaps, no cast shadow, no checkerboard, no lettering, no weapons, no new accessories. Single character sprite with modest margins."
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+[
+  {
+    "skin": "classic",
+    "pose": "wall",
+    "path": "assets\\skins\\classic\\wall.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "transparentPixels": 769638,
+    "bytes": 1496231,
+    "sha256": "1581f4bb326adc4a089dd2835c0a59cd48ffee5b21f9580a858d81cfa0be68e4"
+  },
+  {
+    "skin": "dessert",
+    "pose": "wall",
+    "path": "assets\\skins\\dessert\\wall.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "transparentPixels": 658229,
+    "bytes": 1771717,
+    "sha256": "e53195d369e25aac221a5882c6cca737d6fd42052d31bd0fc0e621d2eba6bc16"
+  },
+  {
+    "skin": "heart",
+    "pose": "wall",
+    "path": "assets\\skins\\heart\\wall.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "transparentPixels": 709241,
+    "bytes": 1600763,
+    "sha256": "56e619c736bfc8bf78273e6d7c9eecc20352d592fe6082fb81d34c20bf0a061e"
+  },
+  {
+    "skin": "magic",
+    "pose": "wall",
+    "path": "assets\\skins\\magic\\wall.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "transparentPixels": 698992,
+    "bytes": 1674956,
+    "sha256": "b83807afb03db242787861d5dc723291e77484e80f1bb158fba33cb716824d73"
+  }
+]

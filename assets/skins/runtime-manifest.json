@@ -1,0 +1,130 @@
+[
+  {
+    "path": "assets/skins/classic/happy.png",
+    "width": 1145,
+    "height": 1374,
+    "mode": "RGB",
+    "bytes": 1786498,
+    "sha256": "f9887be848b86c562473a4f9b274a98ca6589473d38b911a400182edec10bdef"
+  },
+  {
+    "path": "assets/skins/classic/idle.png",
+    "width": 1145,
+    "height": 1374,
+    "mode": "RGB",
+    "bytes": 1577588,
+    "sha256": "e40a01eaef379e9fdb2591c0d9329692cc0dd49d7e5c8a5f7e717ad8c880f635"
+  },
+  {
+    "path": "assets/skins/classic/sleep.png",
+    "width": 1145,
+    "height": 1374,
+    "mode": "RGB",
+    "bytes": 1501298,
+    "sha256": "f24358ae4756e5f71b3a596a8b106db1de179eddfd22c2748ac8cad703b23179"
+  },
+  {
+    "path": "assets/skins/classic/wall.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1496231,
+    "sha256": "1581f4bb326adc4a089dd2835c0a59cd48ffee5b21f9580a858d81cfa0be68e4"
+  },
+  {
+    "path": "assets/skins/dessert/happy.png",
+    "width": 1145,
+    "height": 1374,
+    "mode": "RGB",
+    "bytes": 1682202,
+    "sha256": "c0a0aac7537da2f24bb69031d84c17749d0f4f143de076f4b0bbcc49720b49ff"
+  },
+  {
+    "path": "assets/skins/dessert/idle.png",
+    "width": 1145,
+    "height": 1374,
+    "mode": "RGB",
+    "bytes": 1646828,
+    "sha256": "5a40301b193ea1b72b8ea71abc044ab87ffcc3fca159bb9e054b5b0297b65407"
+  },
+  {
+    "path": "assets/skins/dessert/sleep.png",
+    "width": 1145,
+    "height": 1374,
+    "mode": "RGB",
+    "bytes": 1634363,
+    "sha256": "82dfac97425f6897930f8d22ddb4cddca75fb904256d2fa5c3c44b538089fefd"
+  },
+  {
+    "path": "assets/skins/dessert/wall.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1771717,
+    "sha256": "e53195d369e25aac221a5882c6cca737d6fd42052d31bd0fc0e621d2eba6bc16"
+  },
+  {
+    "path": "assets/skins/heart/happy.png",
+    "width": 1145,
+    "height": 1374,
+    "mode": "RGB",
+    "bytes": 1572266,
+    "sha256": "842db57ddc18703e823ebe4eff32eb691222b63d7ce5d1c661f269c764f69255"
+  },
+  {
+    "path": "assets/skins/heart/idle.png",
+    "width": 1145,
+    "height": 1374,
+    "mode": "RGB",
+    "bytes": 1546726,
+    "sha256": "ce555e49a4be45b93f722aebaded66765bdf8323efe3cd4cb3b088ebf23c9ad9"
+  },
+  {
+    "path": "assets/skins/heart/sleep.png",
+    "width": 1145,
+    "height": 1374,
+    "mode": "RGB",
+    "bytes": 1550495,
+    "sha256": "8ed72aa5ffab435e85b04238cc01096bca2a93ac20a14eca1b73e3eca15c1ae5"
+  },
+  {
+    "path": "assets/skins/heart/wall.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1600763,
+    "sha256": "56e619c736bfc8bf78273e6d7c9eecc20352d592fe6082fb81d34c20bf0a061e"
+  },
+  {
+    "path": "assets/skins/magic/happy.png",
+    "width": 1145,
+    "height": 1374,
+    "mode": "RGB",
+    "bytes": 1814162,
+    "sha256": "b0e1eb8f8685904eb7140acfd35bbf2e7c6a8d5161a0b79db82ca8cf4c1a4975"
+  },
+  {
+    "path": "assets/skins/magic/idle.png",
+    "width": 1145,
+    "height": 1374,
+    "mode": "RGB",
+    "bytes": 1787907,
+    "sha256": "ac4776b1d64280e852dafdc21587942eca2e342b294ae7647b0329fa20ff7903"
+  },
+  {
+    "path": "assets/skins/magic/sleep.png",
+    "width": 1145,
+    "height": 1374,
+    "mode": "RGB",
+    "bytes": 1775034,
+    "sha256": "38578e8c405513e23b5ec6514b52ae86283614aac5d14b4af856529199d219cd"
+  },
+  {
+    "path": "assets/skins/magic/wall.png",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "bytes": 1674956,
+    "sha256": "b83807afb03db242787861d5dc723291e77484e80f1bb158fba33cb716824d73"
+  }
+]

@@ -1,0 +1,43 @@
+{
+  "tool": "built-in image_gen",
+  "date": "2026-09-17",
+  "prompt": "Create one production sprite sheet with exactly TWO separate chibi Michelle desktop-pet upper-body poses. Edit/reference image is the existing Michelle skin portrait: strictly preserve blonde twin tails, blue eyes, face identity, cat-ear accessories, costume colors and ornament placement. LEFT HALF: character peeks into the screen from behind an INVISIBLE vertical wall at the LEFT side of this half, face upright (not rotated sideways), slight inquisitive head tilt 8 degrees, both hands gently gripping the SAME vertical wall edge at two different heights, face and shoulder emerge to its right, lower body hidden offscreen. RIGHT HALF: same character peeks from INVISIBLE vertical wall at RIGHT side of this half; face upright slight opposite tilt, both hands grip right vertical edge, head and shoulder emerge to its left. Natural neck and shoulders connected to arms; head upright in both, long twin tails fall DOWN with gravity. Both sprites equal scale, each bounding area narrow upright portrait, generous clear gap between the two. No legs, no extra hands, no horizontal ledge, no drawn wall, no text, no letters, no panels, no guide lines. True transparent RGBA background including all enclosed gaps between hair, neck, arms, and clothing; preserve white costume as opaque. Clean crisp anime lineart same fidelity as source. Output square 1536x1536 canvas with left and right sprites centered respectively in their exact equal half of canvas, no crossing midpoint. This asset replaces a sideways rotated wall-grip pose; most important is a believable upright peek around a vertical edge, hand contact at outermost left / right sprite boundary.",
+  "assets": [
+    {
+      "skin": "classic",
+      "reference": "assets/skins/classic/grip.png",
+      "output": "assets/skins/classic/wall.png",
+      "poses": [
+        "wall-left",
+        "wall-right"
+      ]
+    },
+    {
+      "skin": "dessert",
+      "reference": "assets/skins/dessert/grip.png",
+      "output": "assets/skins/dessert/wall.png",
+      "poses": [
+        "wall-left",
+        "wall-right"
+      ]
+    },
+    {
+      "skin": "heart",
+      "reference": "assets/skins/heart/grip.png",
+      "output": "assets/skins/heart/wall.png",
+      "poses": [
+        "wall-left",
+        "wall-right"
+      ]
+    },
+    {
+      "skin": "magic",
+      "reference": "assets/skins/magic/grip.png",
+      "output": "assets/skins/magic/wall.png",
+      "poses": [
+        "wall-left",
+        "wall-right"
+      ]
+    }
+  ]
+}

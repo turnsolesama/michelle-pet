@@ -1,0 +1,13 @@
+# Build products are distributed through GitHub Releases.
+releases/
+*.log
+*.tmp
+# Local-only references, screenshots, galleries and exploratory artifacts.
+assets/references/
+docs/*preview*
+docs/screenshots/
+src-v*.txt
+tools/alpha-regions*
+.vs/
+bin/
+obj/
