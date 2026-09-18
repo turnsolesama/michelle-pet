@@ -1,5 +1,9 @@
 # 米雪儿桌宠 / Michele Desktop Pet · v0.3.3
 
+**[下载 v0.3.3 · 中英双语运行包](https://github.com/turnsolesama/michelle-pet/releases/download/v0.3.3/MichelePet-v0.3.3-win.zip)** · **[完整项目包（源码、素材和程序）](https://github.com/turnsolesama/michelle-pet/releases/download/v0.3.3/MichelePet-v0.3.3-Full-Project.zip)** · [发布与 SHA-256 校验](https://github.com/turnsolesama/michelle-pet/releases/tag/v0.3.3)
+
+两个包均已从 GitHub 重新下载并核对大小、SHA-256、ZIP 完整性和程序身份。
+
 [English guide](README.en.md)
 
 中英文现已合并到同一个程序。右键角色或托盘 → **语言 / Language** → **简体中文 / English**，立即切换菜单、皮肤名称、气泡台词和托盘提示，无需重启。切换保留当前位置、大小、服装、睡眠、贴墙或游戏搭子状态。英文角色名为 **Michele**。

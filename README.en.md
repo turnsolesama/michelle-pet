@@ -1,5 +1,9 @@
 # Michele Desktop Pet — Bilingual v0.3.3
 
+**[Download v0.3.3 · Windows bilingual ZIP](https://github.com/turnsolesama/michelle-pet/releases/download/v0.3.3/MichelePet-v0.3.3-win.zip)** · **[Full project ZIP](https://github.com/turnsolesama/michelle-pet/releases/download/v0.3.3/MichelePet-v0.3.3-Full-Project.zip)** · [Release and SHA-256 checksums](https://github.com/turnsolesama/michelle-pet/releases/tag/v0.3.3)
+
+Both uploaded packages were downloaded again and verified for size, SHA-256, ZIP integrity and executable identity.
+
 A fan-made Windows desktop companion inspired by Michele from Strinova. Choose **语言 / Language → English** from the character or tray menu. Chinese and English are included in the same app; switching updates menus, speech bubbles, tray text and application messages without restarting or moving the pet.
 
 ## Start
