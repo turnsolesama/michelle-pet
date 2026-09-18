@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -51,7 +51,7 @@ namespace CodexPet
             }
             using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resource))
             {
-                if (stream == null) throw new InvalidDataException("缺少素材：" + key);
+                if (stream == null) throw new InvalidDataException(PetText.MissingAsset + key);
                 using (Bitmap original = new Bitmap(stream))
                 if(key.Contains(".wall-"))
                 {

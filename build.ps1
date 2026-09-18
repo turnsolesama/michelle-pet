@@ -1,8 +1,10 @@
 $ErrorActionPreference = 'Stop'
-$outDir = Join-Path $PSScriptRoot 'releases\v0.3.2'
+$edition = 'v0.3.3'
+$outDir = Join-Path $PSScriptRoot "releases\$edition"
 New-Item -ItemType Directory -Path $outDir -Force | Out-Null
 $compiler = Join-Path $env:WINDIR 'Microsoft.NET\Framework64\v4.0.30319\csc.exe'
-$exe = Join-Path $outDir 'MichellePet.exe'
+$exeName = 'MichelePet.exe'
+$exe = Join-Path $outDir $exeName
 $arguments = @('/nologo','/target:winexe','/optimize+','/codepage:65001',"/out:$exe",'/reference:System.dll','/reference:System.Core.dll','/reference:System.Drawing.dll','/reference:System.Windows.Forms.dll')
 foreach ($skin in @('classic','dessert','heart','magic')) {
     foreach ($pose in @('idle','happy','sleep','wall')) {
@@ -17,8 +19,11 @@ $arguments += "/resource:$(Join-Path $PSScriptRoot 'assets\companion\hands-v3.pn
 $arguments += (Get-ChildItem (Join-Path $PSScriptRoot 'src') -Filter '*.cs').FullName
 & $compiler @arguments
 if ($LASTEXITCODE -ne 0) { throw 'Build failed' }
-Copy-Item (Join-Path $PSScriptRoot 'README.md') (Join-Path $outDir '使用说明.md')
+Copy-Item (Join-Path $PSScriptRoot 'README.md') (Join-Path $outDir 'README.md')
+Copy-Item (Join-Path $PSScriptRoot 'README.en.md') (Join-Path $outDir 'README.en.md')
 New-Item -ItemType Directory -Path (Join-Path $outDir 'docs') -Force | Out-Null
-Copy-Item (Join-Path $PSScriptRoot 'docs\keyboard-companion-plan.md') (Join-Path $outDir 'docs\keyboard-companion-plan.md')
-@{ version='0.3.2'; bytes=(Get-Item $exe).Length; sha256=(Get-FileHash $exe -Algorithm SHA256).Hash; published=$false } | ConvertTo-Json | Set-Content (Join-Path $outDir 'package.json') -Encoding UTF8
+foreach ($guide in @('keyboard-companion.en.md','keyboard-companion-plan.md')) {
+    Copy-Item (Join-Path $PSScriptRoot "docs\$guide") (Join-Path $outDir "docs\$guide")
+}
+@{ version='0.3.3'; languages=@('zh-CN','en-US'); edition=$edition; bytes=(Get-Item $exe).Length; sha256=(Get-FileHash $exe -Algorithm SHA256).Hash } | ConvertTo-Json | Set-Content (Join-Path $outDir 'package.json') -Encoding UTF8
 Get-Item $exe | Select-Object FullName,Length

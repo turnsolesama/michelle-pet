@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -9,8 +9,8 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 using System.Reflection;
-[assembly: AssemblyTitle("米雪儿桌宠")]
-[assembly: AssemblyVersion("0.3.2.0")]
+[assembly: AssemblyTitle("Michele Desktop Pet / 米雪儿桌宠")]
+[assembly: AssemblyVersion("0.3.3.0")]
 namespace CodexPet
 {
     internal static class Program
@@ -23,6 +23,9 @@ namespace CodexPet
             using(Mutex mutex=new Mutex(true,check?"MichellePet.Check":"MichellePet.Local.v1",out created))
             {
                 if(!created)return;
+                if(!check)PetText.LoadPreference(PetText.SettingsPath);
+                if(Array.IndexOf(args,"--lang=en")>=0)PetText.English=true;
+                if(Array.IndexOf(args,"--lang=zh")>=0)PetText.English=false;
                 try
                 {
                     using(Pet pet=new Pet(check,args.Length>1?args[1]:null))
@@ -34,7 +37,7 @@ namespace CodexPet
                 catch(Exception error)
                 {
                     if(check) { if(args.Length>1){Directory.CreateDirectory(args[1]);File.WriteAllText(Path.Combine(args[1],"FAILED.txt"),error.ToString());} Environment.ExitCode=1; }
-                    else MessageBox.Show(error.ToString(),"米雪儿桌宠启动失败");
+                    else MessageBox.Show(error.ToString(),PetText.StartupError);
                 }
                 finally { mutex.ReleaseMutex(); }
             }
@@ -57,7 +60,7 @@ namespace CodexPet
         readonly string evidence;
         Bitmap frame; Icon petIcon;
         Motion motion=Motion.Idle;
-        string skin="classic", words="米雪儿，报到！";
+        string skin="classic", words=PetText.Greeting;
         int petHeight=240, side, suppressedSide;
         const int Pad=16, BubbleHeight=50;
         bool held, moved, paused, dockDrag, suppressDock;
@@ -66,12 +69,13 @@ namespace CodexPet
         double velocity, preciseY, time, responseUntil=3, jumpUntil, lastTick, nextCheck, dockStarted;
         int assertions;
         static readonly string[] Skins={"classic","dessert","heart","magic"};
-        static readonly string[] Names={"经典制服","甜点美梦","桃心卫士","绮星梦使"};
+        static string[] Names {get{return new string[]{PetText.Classic,PetText.Dessert,PetText.Heart,PetText.Magic};}}
+        Action refreshLanguage;
         protected override bool ShowWithoutActivation {get{return true;}}
         [DllImport("user32.dll")] static extern bool DestroyIcon(IntPtr handle);
         public Pet(bool check,string output)
         {
-            diagnostic=check;evidence=output;Text="米雪儿桌宠";
+            diagnostic=check;evidence=output;Text=PetText.AppName;
             FormBorderStyle=FormBorderStyle.None;ShowInTaskbar=false;TopMost=true;
             StartPosition=FormStartPosition.Manual;AutoScaleMode=AutoScaleMode.None;
             using(Bitmap thumb=new Bitmap(32,32))
@@ -79,28 +83,46 @@ namespace CodexPet
                 using(Graphics g=Graphics.FromImage(thumb))g.DrawImage(bank.Skin("classic","idle"),new Rectangle(0,0,32,32),new Rectangle(300,0,500,500),GraphicsUnit.Pixel);
                 IntPtr h=thumb.GetHicon();petIcon=(Icon)Icon.FromHandle(h).Clone();DestroyIcon(h);
             }
-            Icon=petIcon;tray.Icon=petIcon;tray.Text="米雪儿桌宠 · 双击唤回";tray.Visible=!check;
-            tray.ContextMenuStrip=menu;tray.DoubleClick+=delegate{Home();Say("我在这里喵！");};
-            ToolStripMenuItem game=new ToolStripMenuItem("游戏搭子 · 经典制服");game.Click+=delegate{SetCompanion(!companion);};menu.Items.Add(game);
-            ToolStripMenuItem link=new ToolStripMenuItem("键鼠联动");link.Click+=delegate{linked=!linked;UpdateInput();Render();};menu.Items.Add(link);
+            Icon=petIcon;tray.Icon=petIcon;tray.Text=PetText.Tray;tray.Visible=!check;
+            tray.ContextMenuStrip=menu;tray.DoubleClick+=delegate{Home();Say(PetText.Recall);};
+            ToolStripMenuItem game=new ToolStripMenuItem(PetText.Companion);game.Click+=delegate{SetCompanion(!companion);};menu.Items.Add(game);
+            ToolStripMenuItem link=new ToolStripMenuItem(PetText.Link);link.Click+=delegate{linked=!linked;UpdateInput();Render();};menu.Items.Add(link);
             menu.Items.Add(new ToolStripSeparator());
-            menu.Items.Add("摸摸头",null,delegate{Say("嘿嘿，今天也一起加油！");});
-            menu.Items.Add("轻轻跳一下",null,delegate{Jump();});
-            ToolStripMenuItem sleep=new ToolStripMenuItem("睡一会儿");sleep.Click+=delegate{if(motion==Motion.Sleep)Say("睡醒啦，一起出发！");else Sleep();};menu.Items.Add(sleep);
-            ToolStripMenuItem wardrobe=new ToolStripMenuItem("换皮肤");
+            menu.Items.Add(PetText.Pat,null,delegate{Say(PetText.PatReply);});
+            menu.Items.Add(PetText.Hop,null,delegate{Jump();});
+            ToolStripMenuItem sleep=new ToolStripMenuItem(PetText.Nap);sleep.Click+=delegate{if(motion==Motion.Sleep)Say(PetText.WakeReply);else Sleep();};menu.Items.Add(sleep);
+            ToolStripMenuItem wardrobe=new ToolStripMenuItem(PetText.Outfit);
             for(int i=0;i<Skins.Length;i++){string selected=Skins[i];ToolStripMenuItem item=new ToolStripMenuItem(Names[i]);item.Tag=selected;item.Click+=delegate{SetSkin(selected);};wardrobe.DropDownItems.Add(item);}menu.Items.Add(wardrobe);
-            ToolStripMenuItem sizes=new ToolStripMenuItem("大小");
-            foreach(int value in new int[]{160,240,360}){int selected=value;ToolStripMenuItem item=new ToolStripMenuItem(value==160?"小 · 160":value==240?"中 · 240":"大 · 360");item.Tag=value;item.Click+=delegate{ResizePet(selected);};sizes.DropDownItems.Add(item);}menu.Items.Add(sizes);
-            ToolStripMenuItem edges=new ToolStripMenuItem("收纳到边缘");
-            edges.DropDownItems.Add("左侧贴墙探头",null,delegate{DockAt(-1,Work,Top+Height/2);});
-            edges.DropDownItems.Add("右侧贴墙探头",null,delegate{DockAt(1,Work,Top+Height/2);});menu.Items.Add(edges);
-            ToolStripMenuItem expand=new ToolStripMenuItem("展开全身");expand.Click+=delegate{Expand();};menu.Items.Add(expand);
-            ToolStripMenuItem pause=new ToolStripMenuItem("暂停动画"){CheckOnClick=true};pause.Click+=delegate{paused=pause.Checked;UpdateInput();};menu.Items.Add(pause);
-            ToolStripMenuItem top=new ToolStripMenuItem("保持置顶"){Checked=true,CheckOnClick=true};top.Click+=delegate{TopMost=top.Checked;};menu.Items.Add(top);
-            menu.Items.Add("回到右下角",null,delegate{Home();});menu.Items.Add(new ToolStripSeparator());menu.Items.Add("退出桌宠",null,delegate{Close();});
+            ToolStripMenuItem sizes=new ToolStripMenuItem(PetText.Size);
+            foreach(int value in new int[]{160,240,360}){int selected=value;ToolStripMenuItem item=new ToolStripMenuItem(value==160?PetText.Small:value==240?PetText.Medium:PetText.Large);item.Tag=value;item.Click+=delegate{ResizePet(selected);};sizes.DropDownItems.Add(item);}menu.Items.Add(sizes);
+            ToolStripMenuItem edges=new ToolStripMenuItem(PetText.Edge);
+            edges.DropDownItems.Add(PetText.Left,null,delegate{DockAt(-1,Work,Top+Height/2);});
+            edges.DropDownItems.Add(PetText.Right,null,delegate{DockAt(1,Work,Top+Height/2);});menu.Items.Add(edges);
+            ToolStripMenuItem expand=new ToolStripMenuItem(PetText.Expand);expand.Click+=delegate{Expand();};menu.Items.Add(expand);
+            ToolStripMenuItem pause=new ToolStripMenuItem(PetText.Pause){CheckOnClick=true};pause.Click+=delegate{paused=pause.Checked;UpdateInput();};menu.Items.Add(pause);
+            ToolStripMenuItem top=new ToolStripMenuItem(PetText.Top){Checked=true,CheckOnClick=true};top.Click+=delegate{TopMost=top.Checked;};menu.Items.Add(top);
+            ToolStripItem home=menu.Items.Add(PetText.Home,null,delegate{Home();});
+            ToolStripMenuItem language=new ToolStripMenuItem("语言 / Language"){Name="language"};
+            ToolStripMenuItem chinese=new ToolStripMenuItem("简体中文"),english=new ToolStripMenuItem("English");
+            chinese.Click+=delegate{SetLanguage(false,true);};english.Click+=delegate{SetLanguage(true,true);};
+            language.DropDownItems.Add(chinese);language.DropDownItems.Add(english);menu.Items.Add(language);
+            menu.Items.Add(new ToolStripSeparator());ToolStripItem exit=menu.Items.Add(PetText.Exit,null,delegate{Close();});
+            refreshLanguage=delegate
+            {
+                Text=PetText.AppName;tray.Text=PetText.Tray;
+                game.Text=PetText.Companion;link.Text=PetText.Link;
+                menu.Items[3].Text=PetText.Pat;menu.Items[4].Text=PetText.Hop;
+                sleep.Text=motion==Motion.Sleep?PetText.Wake:PetText.Nap;
+                wardrobe.Text=PetText.Outfit;for(int i=0;i<Names.Length;i++)wardrobe.DropDownItems[i].Text=Names[i];
+                sizes.Text=PetText.Size;sizes.DropDownItems[0].Text=PetText.Small;sizes.DropDownItems[1].Text=PetText.Medium;sizes.DropDownItems[2].Text=PetText.Large;
+                edges.Text=PetText.Edge;edges.DropDownItems[0].Text=PetText.Left;edges.DropDownItems[1].Text=PetText.Right;
+                expand.Text=PetText.Expand;pause.Text=PetText.Pause;top.Text=PetText.Top;home.Text=PetText.Home;exit.Text=PetText.Exit;
+                chinese.Checked=!PetText.English;english.Checked=PetText.English;
+            };
+            refreshLanguage();
             menu.Opening+=delegate
             {
-                sleep.Text=motion==Motion.Sleep?"醒来啦":"睡一会儿";pause.Checked=paused;expand.Visible=motion==Motion.Docked;
+                refreshLanguage();pause.Checked=paused;expand.Visible=motion==Motion.Docked;
                 game.Checked=companion;link.Checked=linked;link.Enabled=companion;
                 companionInput.Disable();
                 foreach(ToolStripMenuItem i in wardrobe.DropDownItems)i.Checked=(string)i.Tag==skin;
@@ -109,6 +131,13 @@ namespace CodexPet
             menu.Closed+=delegate{UpdateInput();};
             ContextMenuStrip=menu;timer.Interval=33;timer.Tick+=Tick;
             Shown+=delegate{Home();if(diagnostic)SetupChecks();lastTick=elapsed.Elapsed.TotalSeconds;timer.Start();};
+        }
+        internal void SetLanguage(bool english,bool save)
+        {
+            words=PetText.TranslateTo(words,english);PetText.English=english;
+            refreshLanguage();Render();
+            if(save && !diagnostic && !PetText.SavePreference(PetText.SettingsPath))
+                tray.ShowBalloonTip(4000,"语言 / Language",PetText.SaveError,ToolTipIcon.Warning);
         }
         int FullWidth {get{return (int)Math.Round(petHeight*(companion?4.0/3:.86))+2*Pad;}}
         int FullHeight {get{return petHeight+2*Pad+BubbleHeight;}}
@@ -134,9 +163,9 @@ namespace CodexPet
                 try{companionInput.Enable(Handle);}
                 catch(System.ComponentModel.Win32Exception error)
                 {
-                    linked=false;words="键鼠联动未能启动，请重新开启";responseUntil=time+4;
+                    linked=false;words=PetText.LinkError;responseUntil=time+4;
                     if(diagnostic)throw;
-                    tray.ShowBalloonTip(4000,"键鼠联动未启动",error.Message,ToolTipIcon.Warning);
+                    tray.ShowBalloonTip(4000,PetText.LinkErrorTitle,error.Message,ToolTipIcon.Warning);
                 }
             }
             else if(!active)companionInput.Disable();
@@ -176,7 +205,7 @@ namespace CodexPet
             UpdateInput();
         }
         void Say(string line){Ground();words=line;responseUntil=time+2.8;Render();}
-        void Jump(){Say("喵，出发！");jumpUntil=time+.65;}
+        void Jump(){Say(PetText.HopReply);jumpUntil=time+.65;}
         void Sleep(){if(companion)SetCompanion(false);Ground();motion=Motion.Sleep;Render();}
         void DockAt(int which,Rectangle area,int center)
         {
@@ -230,7 +259,7 @@ namespace CodexPet
             if(!held)return;bool wasMoved=moved,wasDock=dockDrag;held=moved=dockDrag=false;Capture=false;
             if(wasDock){if(!wasMoved)Expand();return;}
             if(wasMoved)ReleasePet(p);
-            else if(localY>BubbleHeight+petHeight*.8)Jump();else Say("嘿嘿，摸摸头就有精神啦！");
+            else if(localY>BubbleHeight+petHeight*.8)Jump();else Say(PetText.TouchReply);
             UpdateInput();
         }
         protected override void OnMouseDown(MouseEventArgs e){base.OnMouseDown(e);if(e.Button==MouseButtons.Left){BeginDrag(Cursor.Position);Capture=true;}}
@@ -305,8 +334,8 @@ namespace CodexPet
                         Rectangle bubble=new Rectangle(2,4,width-4,36);
                         using(Brush bg=new SolidBrush(Color.FromArgb(242,243,249,255)))g.FillRectangle(bg,bubble);
                         using(Pen border=new Pen(Color.FromArgb(125,177,225)))g.DrawRectangle(border,bubble);
-                        using(Font font=new Font("Microsoft YaHei UI",9))using(Brush ink=new SolidBrush(Color.FromArgb(35,64,99)))
-                        using(StringFormat sf=new StringFormat{Alignment=StringAlignment.Center,LineAlignment=StringAlignment.Center})g.DrawString(sleep?"Zzz… 休息一会儿":words,font,ink,bubble,sf);
+                        using(Font font=new Font(PetText.Font,9))using(Brush ink=new SolidBrush(Color.FromArgb(35,64,99)))
+                        using(StringFormat sf=new StringFormat{Alignment=StringAlignment.Center,LineAlignment=StringAlignment.Center})g.DrawString(sleep?PetText.Sleeping:words,font,ink,bubble,sf);
                     }
                 }
             }
@@ -325,7 +354,7 @@ namespace CodexPet
         void SetupChecks()
         {
             if(String.IsNullOrEmpty(evidence))throw new ArgumentException("--check requires an output directory");
-            Directory.CreateDirectory(evidence);File.WriteAllText(Path.Combine(evidence,"checks.txt"),"MichellePet 0.3.2 / "+Environment.OSVersion+Environment.NewLine);
+            Directory.CreateDirectory(evidence);File.WriteAllText(Path.Combine(evidence,"checks.txt"),PetText.AppName+" 0.3.3 / "+PetText.Language+" / "+Environment.OSVersion+Environment.NewLine);
             checks.Enqueue(delegate{bank.VerifyMasks(Assert);});
             foreach(string value in Skins)
             {
@@ -341,9 +370,9 @@ namespace CodexPet
                     Assert(horizontal,s+" idle horizontal position and width fixed across breathing cycle");
                     Assert(feet,s+" idle feet stay planted across breathing cycle");
                 });
-                checks.Enqueue(delegate{CaptureEvidence(s+"-idle");Assert(frame.GetPixel(0,0).A==0,s+" transparent corner");Say("今天也一起加油！");});
+                checks.Enqueue(delegate{CaptureEvidence(s+"-idle");Assert(frame.GetPixel(0,0).A==0,s+" transparent corner");Say(PetText.PatReply);});
                 checks.Enqueue(delegate{CaptureEvidence(s+"-happy");Sleep();Assert(motion==Motion.Sleep,s+" sleeps");});
-                checks.Enqueue(delegate{CaptureEvidence(s+"-sleep");SetSkin(Skins[(Array.IndexOf(Skins,s)+1)%Skins.Length]);Assert(motion==Motion.Sleep,"skin change retains sleep");SetSkin(s);Say("醒来啦");Assert(motion==Motion.Idle,"sleep wake clears state");DockAt(-1,Work,Work.Top+220);});
+                checks.Enqueue(delegate{CaptureEvidence(s+"-sleep");SetSkin(Skins[(Array.IndexOf(Skins,s)+1)%Skins.Length]);Assert(motion==Motion.Sleep,"skin change retains sleep");SetSkin(s);Say(PetText.Wake);Assert(motion==Motion.Idle,"sleep wake clears state");DockAt(-1,Work,Work.Top+220);});
                 checks.Enqueue(delegate
                 {
                     dockStarted=time-1;Render();CaptureEvidence(s+"-left");Assert(Left==dockArea.Left,"left contact anchored");stable=Location;
@@ -353,7 +382,7 @@ namespace CodexPet
                     Assert(motion==Motion.Docked,"vertical drag remains docked");DockAt(1,dockArea,Top+Height/2);
                 });
                 checks.Enqueue(delegate{dockStarted=time-1;Render();CaptureEvidence(s+"-right");Assert(Right==dockArea.Right,"right contact anchored");Point p=new Point(Left+Width/2,Top+Height/2);BeginDrag(p);MoveDrag(new Point(p.X-70,p.Y));Assert(motion==Motion.Drag,"inward drag unfolds");EndDrag(new Point(p.X-70,p.Y),50);Assert(motion!=Motion.Docked,"release does not immediately redock");Sleep();});
-                checks.Enqueue(delegate{paused=true;Say("醒来啦");Assert(!paused && motion==Motion.Idle,"explicit action clears pause and sleep");});
+                checks.Enqueue(delegate{paused=true;Say(PetText.Wake);Assert(!paused && motion==Motion.Idle,"explicit action clears pause and sleep");});
             }
             checks.Enqueue(delegate{Home();Top-=100;preciseY=Top;velocity=0;motion=Motion.Fall;});
             for(int i=0;i<5;i++)checks.Enqueue(delegate{});
@@ -381,7 +410,7 @@ namespace CodexPet
             checks.Enqueue(delegate
             {
                 Assert(Location==stable,"landed native position stable");foreach(int size in new int[]{160,360,240}){ResizePet(size);Assert(Top+Height-Pad==Work.Bottom,"full-size ground anchor "+size);}
-                Assert(menu.Items[menu.Items.Count-1].Text=="退出桌宠","exit last menu item");
+                Assert(menu.Items[menu.Items.Count-1].Text==PetText.Exit,"exit last menu item");
                 File.AppendAllText(Path.Combine(evidence,"checks.txt"),"TOTAL "+assertions+"\nPhysical mouse, mixed DPI and long-run tests not covered.\n");Close();
             });
         }

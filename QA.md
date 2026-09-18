@@ -151,3 +151,30 @@ ZIP 全部条目成功读取，单一 v0.1.0 根目录，仅 EXE、使用说明�
 限制：诊断通过方法驱动，不等同于真实鼠标点击/拖拽验收；本次未覆盖真人操作、混合 DPI、多显示器长期运行。当前为两帧加整体变换动画，未制作睡姿、走路、换装或抓框。造型由默认选项产生，待用户体验确认。
 
 本次交付实际切换入口：releases/v0.3.0/MichellePet.exe --companion，旧 v0.2.2 进程已退出，历史包保留。
+
+
+## English edition v0.3.2-en — 2026-09-17
+
+- Local English edition: translated menus, tray text, speech bubbles and application errors; added an English guide and build switch. Shared behavior and artwork are unchanged. English outfit labels are descriptive fan translations.
+- Final English EXE: 177 diagnostic assertions, 62 input/render checks, 28 free-placement checks, 27 edge checks and 34 English layout/menu checks passed on Windows. The 160-pixel speech bubbles fit a single line. Native menu, outfit submenu, awake/sleep bubbles and companion screenshots were reviewed locally.
+- EnglishLayoutRegression loads the release EXE and exercises menu actions through methods. Diagnostics capture actual native composition; these results do not claim new physical-input, game, mixed-DPI, multi-monitor or long-duration coverage.
+- Delivery: separate English runtime and full-project ZIPs; SHA-256, ZIP CRC, single-root structure, source manifest and embedded EXE identity verified. Existing published Chinese ZIPs retained unchanged. Desktop captures and harness executables excluded.
+- Run `releases/v0.3.2-en/MichellePet.exe`; exit another edition first. No desktop shortcut or running installation was replaced. English packages are local only, not published to GitHub.
+
+
+## English edition v0.3.2-en-r1 — 2026-09-17
+
+- Corrected the English character name to Michele in the title, tray, greeting, startup error, English guide and program/package filenames. This r1 build shares all behavior and artwork with the previous English edition.
+- Final English EXE: 177 diagnostic assertions, 62 input/render checks, 28 free-placement checks, 27 edge checks and 34 English layout/menu checks passed on Windows. The 160-pixel speech bubbles fit a single line. Native menu, outfit submenu, awake/sleep bubbles and companion screenshots were reviewed locally.
+- EnglishLayoutRegression loads the release EXE and exercises menu actions through methods. Diagnostics capture actual native composition; these results do not claim new physical-input, game, mixed-DPI, multi-monitor or long-duration coverage.
+- Delivery: separate English runtime and full-project ZIPs; SHA-256, ZIP CRC, single-root structure, source manifest and embedded EXE identity verified. Existing published Chinese ZIPs retained unchanged. Desktop captures and harness executables excluded.
+- Run `releases/v0.3.2-en-r1/MichelePet.exe`; exit another edition first. No desktop shortcut or running installation was replaced. English packages are local only, not published to GitHub.
+
+
+## v0.3.3 bilingual — 2026-09-18
+
+- One EXE now contains Chinese and English. The permanent `语言 / Language` submenu switches text immediately; it preserves active bubbles, geometry, outfit, sleep, edge docking, companion mode, pause and input-link choices. English character name: Michele.
+- Language is the only saved preference, stored under LocalApplicationData/MichelePet/language.txt. Startup defaults to Chinese, restores the saved language and supports temporary --lang=zh / --lang=en overrides. A failed preference write leaves the current session usable and displays a localized notification.
+- Final release EXE passed 177 diagnostic assertions in each language, 62 input/render checks, 28 free-placement checks, 27 edge checks, 54 language/state/persistence checks and 36 English/native menu layout checks. Reviewed native Chinese/English menus and the language picker. Persistence tests use a private temporary path; diagnostics do not read or write the real user preference.
+- These are method-driven state tests, actual native-composition captures and isolated file-persistence checks. No new claim of physical dragging, specific-game, anti-cheat, mixed-DPI/multi-monitor or long-run acceptance.
+- Release binary: releases/v0.3.3/MichelePet.exe. Runtime and full-project packages are built from the tested EXE and reviewed public source inventory. Private screenshots, reference galleries, preferences and compiled probes are excluded. Older packages remain unchanged. Download verification is recorded locally after publication.

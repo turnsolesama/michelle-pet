@@ -1,7 +1,8 @@
-# MichellePet
+# MichelePet / 米雪儿桌宠
 
 - Build: `./build.ps1` on Windows using the system .NET Framework compiler. Preserve historical releases; do not overwrite published archives.
-- Diagnostic: `releases/v0.3.2/MichellePet.exe --check <absolute temporary directory>`. It creates desktop-region screenshots; keep diagnostic output local.
+- Bilingual build: `./build.ps1` outputs `releases/v0.3.3/MichelePet.exe`. Runtime text is in `src/PetText.cs`. Language switching must preserve pet state; persistence tests must use isolated temporary paths. Run LanguageRegression and EnglishLayoutRegression against the release EXE with an absolute private evidence directory. They use method-driven actions, not physical input.
+- Diagnostic: `releases/v0.3.3/MichelePet.exe --check <absolute temporary directory>`. It creates desktop-region screenshots; keep diagnostic output local.
 - Edge regression: compile tests/EdgeRegression.cs with System.Drawing.dll and System.Windows.Forms.dll, then pass the EXE under test as its argument. This exercises behavior methods, not physical mouse input.
 - Keep source, runtime assets and build outputs consistent. Preserve per-frame UpdateLayeredWindow SIZE submission and separate window placement from animation rendering.
 - Never publish official reference collections, desktop screenshots, local galleries, credentials or personal configuration.
