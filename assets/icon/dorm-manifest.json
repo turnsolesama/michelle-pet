@@ -1,0 +1,24 @@
+{
+  "version": "0.3.7",
+  "generator": "built-in imagegen",
+  "characterReference": "../companion/dorm-body-longhair.png",
+  "prompt": "Create a close-up icon of the exact dorm long-hair Michele: blonde bangs, natural downward long hair, blue eyes, small black side bows, calico cat sleep mask resting on top of head, black choker and orange-white frilly dorm neckline. No headset, microphone, blue uniform or neck bell. Soft rounded square with pale sky-blue/cream background, blush rim and small paw accent. Keep head accessories inside border, a recognizable face at 16–48 pixels, no text and alpha-transparent outer corners.",
+  "files": {
+    "png": "michele-dorm.png",
+    "ico": "michele-dorm.ico"
+  },
+  "sizes": [
+    16,
+    20,
+    24,
+    32,
+    40,
+    48,
+    64,
+    128,
+    256
+  ],
+  "pngSha256": "d760dd8a94c7027857eb2e8b8ee1d0e42125ae778a227eca03a6fc617d4052cf",
+  "icoSha256": "ec7465a9f855cc980d33b7e79d270904e93ecb868cb18c2ec34e5ebf689f8c8b",
+  "conversion": "Only multi-size 32-bit DIB ICO encoding; generated PNG preserved unchanged. Previous accepted icon preserved."
+}

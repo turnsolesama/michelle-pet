@@ -1,0 +1,19 @@
+{
+  "source": "Built-in imagegen; based on assets/skins/classic/idle.png",
+  "created": "2026-09-18",
+  "description": "Michele close-up, cat-ear headphones, blonde hair and blue eyes on a rounded blue badge.",
+  "sizes": [
+    16,
+    20,
+    24,
+    32,
+    40,
+    48,
+    64,
+    128,
+    256
+  ],
+  "pngSha256": "f12b628bc2e07cf6bd79841a8ed552181ace8d022841e92fa6b49cf1697792a0",
+  "icoSha256": "ec378cad5800a9da11977470183968e91041b4799c38fddfa0d67a929d03768d",
+  "conversion": "Multi-resolution 32-bit DIB ICO for .NET Framework Icon.ToBitmap compatibility; original generated PNG preserved."
+}

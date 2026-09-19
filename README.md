@@ -1,8 +1,8 @@
-# 米雪儿桌宠 / Michele Desktop Pet · v0.3.3
+# 米雪儿桌宠 / Michele Desktop Pet · v0.3.7
 
-**[下载 v0.3.3 · 中英双语运行包](https://github.com/turnsolesama/michelle-pet/releases/download/v0.3.3/MichelePet-v0.3.3-win.zip)** · **[完整项目包（源码、素材和程序）](https://github.com/turnsolesama/michelle-pet/releases/download/v0.3.3/MichelePet-v0.3.3-Full-Project.zip)** · [发布与 SHA-256 校验](https://github.com/turnsolesama/michelle-pet/releases/tag/v0.3.3)
+经典制服保留原来的双马尾，新增喵萌元气宿舍款采用自然垂下的长发；两款都配有圆角键帽、猫耳鼠标垫与猫爪桌面装饰。应用、托盘及快捷方式图标使用浅蓝奶油底的宿舍长发头像。右键 → **搭子造型**，选择经典制服或喵萌元气 · 宿舍。
 
-两个包均已从 GitHub 重新下载并核对大小、SHA-256、ZIP 完整性和程序身份。
+下载与历史版本：[GitHub Releases](https://github.com/turnsolesama/michelle-pet/releases)。中英文包含在同一个程序内。
 
 [English guide](README.en.md)
 
@@ -10,7 +10,7 @@
 
 ## 启动
 
-解压运行包，双击 `v0.3.3/MichelePet.exe`。这是免安装 Windows 程序，依赖 .NET Framework 4.x。启动前先从旧版的右键菜单退出，所有版本共用单实例锁。
+解压运行包，双击 `v0.3.7/MichelePet.exe`。这是免安装 Windows 程序，依赖 .NET Framework 4.x。启动前先从旧版的右键菜单退出，所有版本共用单实例锁。
 
 首次启动默认中文。语言偏好只保存在 `%LOCALAPPDATA%/MichelePet/language.txt`，下次启动自动恢复。可用 `--lang=zh` 或 `--lang=en` 临时指定启动语言；右键选择语言才更新偏好。语言文件无法写入时，本次仍能切换并显示提示。
 
@@ -27,11 +27,11 @@
 
 ## 游戏搭子
 
-右键 → **游戏搭子 · 经典制服**。左手跟随 W/A/S/D、Q/E/R/F、Shift、Ctrl、空格；右手跟随鼠标相对移动与左右键。多个游戏键同时按住时，最近按下的键优先，其他键保持亮起。短按有短暂动作，长按保持按压。
+右键 → **搭子造型**，选择经典制服或喵萌元气宿舍款；上方“游戏搭子”可切换该模式。左手跟随 W/A/S/D、Q/E/R/F、Shift、Ctrl、空格；右手跟随鼠标相对移动与左右键。多个游戏键同时按住时，最近按下的键优先，其他键保持亮起。短按有短暂动作，长按保持按压。
 
 其他字母、数字、常用符号、退格、回车和 Tab 触发通用敲击，无标签键区交替亮起；不会把每个字符映射到独立键帽，也不读取输入框或输入法文本。
 
-搭子可拖到屏幕工作区内任意位置，松手停留，不下落、不自动贴边。关闭“键鼠联动”保留坐姿；拖动、打开菜单、暂停动画会暂时停用输入。换肤、睡眠或手动贴墙会退出搭子模式，并恢复普通桌宠行为。键鼠姿势目前只有经典制服。
+搭子可拖到屏幕工作区内任意位置，松手停留，不下落、不自动贴边。关闭“键鼠联动”保留坐姿；拖动、打开菜单、暂停动画会暂时停用输入。换肤、睡眠或手动贴墙会退出搭子模式，并恢复普通桌宠行为。键鼠姿势支持经典制服与喵萌元气宿舍款。右键“搭子造型”选择后会直接进入游戏搭子；在搭子中切换造型保留大小、位置、暂停和输入开关。造型选择只在本次运行保留；语言仍会记忆。
 
 这是分层 2D 动画，不是 Live2D，也未做逐手指绑定。[制作方案](docs/keyboard-companion-plan.md)保留后续制作规划。
 
@@ -43,8 +43,10 @@
 
 ## 开发
 
-运行 `./build.ps1`，生成 `releases/v0.3.3/MichelePet.exe`，不再分别构建中英文版。共享文字在 `src/PetText.cs`，语言切换仅刷新显示，不重建角色状态。
+运行 `./build.ps1`，生成 `releases/v0.3.7/MichelePet.exe`，不再分别构建中英文版。共享文字在 `src/PetText.cs`，语言切换仅刷新显示，不重建角色状态。
 
 `MichelePet.exe --check <绝对目录>` 会运行诊断并退出，可附加 `--lang=en` 检查英文。诊断不读取或修改用户语言偏好，但包含本机桌面截图，请勿公开上传。语言偏好测试使用独立临时路径。
 
 源码和历史版本见 [GitHub 仓库](https://github.com/turnsolesama/michelle-pet)。
+
+宿舍款根据[官方喵萌元气展示](https://www.bilibili.com/video/BV1uQrKBMEex/)及游戏立绘改绘为 Q 版，不是直接提取的官方游戏模型。

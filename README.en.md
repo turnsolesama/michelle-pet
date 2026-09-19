@@ -1,14 +1,14 @@
-# Michele Desktop Pet — Bilingual v0.3.3
+# Michele Desktop Pet — Bilingual v0.3.7
 
-**[Download v0.3.3 · Windows bilingual ZIP](https://github.com/turnsolesama/michelle-pet/releases/download/v0.3.3/MichelePet-v0.3.3-win.zip)** · **[Full project ZIP](https://github.com/turnsolesama/michelle-pet/releases/download/v0.3.3/MichelePet-v0.3.3-Full-Project.zip)** · [Release and SHA-256 checksums](https://github.com/turnsolesama/michelle-pet/releases/tag/v0.3.3)
+Classic Uniform keeps its original twin ponytails, while the new Feline Energy dorm pose uses naturally flowing long hair, independent bare hands and an ivory/orange mouse. Both Gaming Buddy desks have rounded keycaps, cat-ear mouse mats and paw details. A dorm long-hair portrait with a soft blue/cream badge appears on the executable, tray and desktop shortcut.
 
-Both uploaded packages were downloaded again and verified for size, SHA-256, ZIP integrity and executable identity.
+Downloads and previous versions: [GitHub Releases](https://github.com/turnsolesama/michelle-pet/releases). Chinese and English are included in one app.
 
 A fan-made Windows desktop companion inspired by Michele from Strinova. Choose **语言 / Language → English** from the character or tray menu. Chinese and English are included in the same app; switching updates menus, speech bubbles, tray text and application messages without restarting or moving the pet.
 
 ## Start
 
-Extract the entire ZIP and double-click **MichelePet.exe** inside `v0.3.3`. No installation is needed; the app uses Windows .NET Framework 4.x. Exit any running Chinese or older edition first: all editions share a single-instance lock. Right-click the character or tray icon and choose **Exit** to close it.
+Extract the entire v0.3.7 ZIP and double-click **MichelePet.exe** inside `v0.3.7`. No installation is needed; the app uses Windows .NET Framework 4.x. Exit any running Chinese or older edition first: all editions share a single-instance lock. Right-click the character or tray icon and choose **Exit** to close it.
 
 The first launch defaults to Chinese. The **语言 / Language** submenu offers **简体中文** and **English**. Your choice is saved in `%LOCALAPPDATA%/MichelePet/language.txt` and restored next time. Switching preserves outfit, position, size, sleep, edge-peeking and Gaming Buddy states. Use `--lang=en` or `--lang=zh` for a one-launch override. If saving fails, the selected language still applies to the current session.
 
@@ -32,7 +32,7 @@ Other letters, numbers, common punctuation, Backspace, Enter and Tab trigger a g
 
 Drag Gaming Buddy anywhere within your display's work area: she stays where you leave her, without falling or automatically docking. **Keyboard / Mouse Input** turns input reactions off while keeping the seated pose. Dragging, opening the menu or pausing temporarily suspends input capture. Leaving the mode restores the previous outfit. Changing outfit, sleeping or manually docking also exits Gaming Buddy.
 
-Only Classic Uniform has the keyboard/mouse pose. This is layered 2D animation, not a Live2D model. See [Gaming Buddy notes](docs/keyboard-companion.en.md).
+Choose **Gaming Buddy Outfit → Classic Uniform / Feline Energy - Dorm** for either keyboard/mouse pose. Choosing an outfit enters Gaming Buddy; switching while seated preserves position, size, pause and input-link settings. Outfit selection lasts for the current session; only the language preference is saved. This is layered 2D animation, not a Live2D model. See [Gaming Buddy notes](docs/keyboard-companion.en.md).
 
 ## Privacy and artwork
 
@@ -48,8 +48,8 @@ In the full project folder, run PowerShell:
 ./build.ps1
 ```
 
-The output is `releases/v0.3.3/MichelePet.exe`. One build contains both languages. User-facing strings and preference handling are in `src/PetText.cs`.
+The output is `releases/v0.3.7/MichelePet.exe`. One build contains both languages. User-facing strings and preference handling are in `src/PetText.cs`.
 
 `MichelePet.exe --check <absolute-output-directory>` runs diagnostics and exits. Its output includes screenshots of your desktop; keep that directory private. Local test harness executables are not included in the runtime ZIP.
 
-Source repository: [turnsolesama/michelle-pet](https://github.com/turnsolesama/michelle-pet). Both languages are distributed together in v0.3.3; older releases remain available.
+Source repository: [turnsolesama/michelle-pet](https://github.com/turnsolesama/michelle-pet). Both languages are distributed together; older releases remain available.

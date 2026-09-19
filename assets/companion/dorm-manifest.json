@@ -1,0 +1,82 @@
+{
+  "version": "0.3.5",
+  "generator": "built-in imagegen",
+  "outfit": "Michele / 喵萌元气 (dorm outfit)",
+  "references": {
+    "officialShowcase": "https://www.bilibili.com/video/BV1uQrKBMEex/",
+    "officialArtworkRehost": "https://wiki.biligame.com/klbq/文件:米雪儿·李-喵萌元气立绘.png",
+    "style": "classic-atlas.png",
+    "handsLayout": "hands-v3.png",
+    "referenceImagesDistributed": false
+  },
+  "body": {
+    "file": "dorm-body.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "sha256": "1a2adb933feadc32640e8fa09d67fdac45ec230a01989dbcd0f139a15e905969",
+    "bounds": [
+      52,
+      0,
+      290,
+      281.5
+    ],
+    "crop": "entire RGBA image"
+  },
+  "hands": {
+    "file": "dorm-hands.png",
+    "size": [
+      1774,
+      887
+    ],
+    "sha256": "403c89b26f826881265ee8f5c6355be671c57f406dd8079802e4c204f068d2df",
+    "forearmCrop": [
+      180,
+      170,
+      270,
+      520
+    ],
+    "forearmElbow": [
+      135,
+      85
+    ],
+    "forearmWrist": [
+      135,
+      475
+    ],
+    "keyboardCrop": [
+      650,
+      340,
+      420,
+      470
+    ],
+    "keyboardWrist": [
+      235,
+      80
+    ],
+    "keyboardIndexContact": [
+      135,
+      420
+    ],
+    "mouseCrop": [
+      1260,
+      340,
+      400,
+      510
+    ],
+    "mouseWrist": [
+      190,
+      80
+    ],
+    "mouseContact": [
+      190,
+      360
+    ],
+    "fixedHandScale": 0.085
+  },
+  "bodyBrief": "Existing chibi face/proportions and frontal seated pose. Official calico cat sleep mask, blonde twin tails with black bows, blue eyes, black choker and halter straps, wide white off-shoulder neckline with orange ruffles, black/white bow with gold cat-paw center and orange pompom. Upper body and short upper arms only, no forearms/hands or furniture. Preserve native transparent gaps.",
+  "handsBrief": "Three columns matching previous hand atlas. Rounded pale bare forearm shaft; left keyboard hand with thumb viewer-left; right hand on ivory/orange mouse with thumb viewer-right. Identical palm scale, white scrunchies, five digits, no gloves or blue sleeves. Transparent RGBA.",
+  "desk": "Classic: cream/blue keycaps and light-blue cat-ear mouse mat. Dorm: cream/orange keycaps and warm-orange cat-ear mouse mat. Both use rounded padded desk, paw emblem and stitched edge. Keycap geometry, 180-degree orientation and target coordinates preserved.",
+  "alpha": "Original generated RGBA preserved; no global white removal."
+}

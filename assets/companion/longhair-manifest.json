@@ -1,0 +1,31 @@
+{
+  "version": "0.3.7",
+  "generator": "built-in imagegen",
+  "editBrief": "Change only the blonde hairstyle: reduce bulky twin ponytail volume and high puffy roots, use slimmer understated tied side sections with most hair flowing naturally downward behind the shoulders. Preserve long hair length; reduce large outward curls. Keep face, bangs, head scale and position, costume, upper-arm endpoints and torso baseline. Keep actual RGBA transparency in all background and hair/body gaps. No additional hands or furniture.",
+  "dormConstraints": "Preserve square 1254x1254 body layout, calico mask, black bows as smaller accents and orange-white costume. Original independent hand atlas is reused.",
+  "assets": [
+    {
+      "file": "dorm-body-longhair.png",
+      "source": "dorm-body.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "sha256": "6431b4c94bf4e26478020b9abe43ed8ea3b951704596672475a3bff011071db3",
+      "runtimeCrop": "full image",
+      "destinationBounds": [
+        52,
+        0,
+        290,
+        281.5
+      ]
+    }
+  ],
+  "scope": "Only dorm Gaming Buddy uses the long-hair edit. Classic Gaming Buddy uses original classic-atlas.png with twin ponytails. Normal pet sprites stay unchanged.",
+  "originalAssetsPreserved": true
+}

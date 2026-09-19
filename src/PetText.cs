@@ -5,6 +5,9 @@ namespace CodexPet
     internal static class PetText
     {
         public static bool English;
+        public static string CompanionOutfit {get{return English?"Gaming Buddy Outfit":"搭子造型";}}
+        public static string DormOutfit {get{return English?"Feline Energy - Dorm":"喵萌元气 · 宿舍";}}
+        public static string DormCompanion {get{return English?"Gaming Buddy - Dorm":"游戏搭子 · 宿舍";}}
         public static string SettingsPath {get{return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"MichelePet","language.txt");}}
         public static void LoadPreference(string path)
         {

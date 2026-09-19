@@ -10,7 +10,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Reflection;
 [assembly: AssemblyTitle("Michele Desktop Pet / 米雪儿桌宠")]
-[assembly: AssemblyVersion("0.3.3.0")]
+[assembly: AssemblyVersion("0.3.7.0")]
 namespace CodexPet
 {
     internal static class Program
@@ -54,11 +54,11 @@ namespace CodexPet
         readonly Queue<Action> checks=new Queue<Action>();
         readonly CompanionInput companionInput=new CompanionInput();
         CompanionRenderer companionRenderer;
-        bool companion,linked=true;
+        bool companion,linked=true,companionDorm;
         string previousSkin="classic";
         readonly bool diagnostic;
         readonly string evidence;
-        Bitmap frame; Icon petIcon;
+        Bitmap frame; Icon petIcon,trayIcon;
         Motion motion=Motion.Idle;
         string skin="classic", words=PetText.Greeting;
         int petHeight=240, side, suppressedSide;
@@ -72,18 +72,17 @@ namespace CodexPet
         static string[] Names {get{return new string[]{PetText.Classic,PetText.Dessert,PetText.Heart,PetText.Magic};}}
         Action refreshLanguage;
         protected override bool ShowWithoutActivation {get{return true;}}
-        [DllImport("user32.dll")] static extern bool DestroyIcon(IntPtr handle);
         public Pet(bool check,string output)
         {
             diagnostic=check;evidence=output;Text=PetText.AppName;
             FormBorderStyle=FormBorderStyle.None;ShowInTaskbar=false;TopMost=true;
             StartPosition=FormStartPosition.Manual;AutoScaleMode=AutoScaleMode.None;
-            using(Bitmap thumb=new Bitmap(32,32))
+            using(Stream stream=Assembly.GetExecutingAssembly().GetManifestResourceStream("App.Icon"))
             {
-                using(Graphics g=Graphics.FromImage(thumb))g.DrawImage(bank.Skin("classic","idle"),new Rectangle(0,0,32,32),new Rectangle(300,0,500,500),GraphicsUnit.Pixel);
-                IntPtr h=thumb.GetHicon();petIcon=(Icon)Icon.FromHandle(h).Clone();DestroyIcon(h);
+                petIcon=new Icon(stream,new Size(32,32));
+                stream.Position=0;trayIcon=new Icon(stream,SystemInformation.SmallIconSize);
             }
-            Icon=petIcon;tray.Icon=petIcon;tray.Text=PetText.Tray;tray.Visible=!check;
+            Icon=petIcon;tray.Icon=trayIcon;tray.Text=PetText.Tray;tray.Visible=!check;
             tray.ContextMenuStrip=menu;tray.DoubleClick+=delegate{Home();Say(PetText.Recall);};
             ToolStripMenuItem game=new ToolStripMenuItem(PetText.Companion);game.Click+=delegate{SetCompanion(!companion);};menu.Items.Add(game);
             ToolStripMenuItem link=new ToolStripMenuItem(PetText.Link);link.Click+=delegate{linked=!linked;UpdateInput();Render();};menu.Items.Add(link);
@@ -106,11 +105,17 @@ namespace CodexPet
             ToolStripMenuItem chinese=new ToolStripMenuItem("简体中文"),english=new ToolStripMenuItem("English");
             chinese.Click+=delegate{SetLanguage(false,true);};english.Click+=delegate{SetLanguage(true,true);};
             language.DropDownItems.Add(chinese);language.DropDownItems.Add(english);menu.Items.Add(language);
+            ToolStripMenuItem looks=new ToolStripMenuItem(PetText.CompanionOutfit){Name="companion-outfit"};
+            ToolStripMenuItem classicLook=new ToolStripMenuItem(PetText.Classic),dormLook=new ToolStripMenuItem(PetText.DormOutfit);
+            classicLook.Click+=delegate{SetCompanionOutfit(false);};dormLook.Click+=delegate{SetCompanionOutfit(true);};
+            looks.DropDownItems.Add(classicLook);looks.DropDownItems.Add(dormLook);menu.Items.Add(looks);
             menu.Items.Add(new ToolStripSeparator());ToolStripItem exit=menu.Items.Add(PetText.Exit,null,delegate{Close();});
             refreshLanguage=delegate
             {
                 Text=PetText.AppName;tray.Text=PetText.Tray;
-                game.Text=PetText.Companion;link.Text=PetText.Link;
+                game.Text=companionDorm?PetText.DormCompanion:PetText.Companion;link.Text=PetText.Link;
+                looks.Text=PetText.CompanionOutfit;classicLook.Text=PetText.Classic;dormLook.Text=PetText.DormOutfit;
+                classicLook.Checked=!companionDorm;dormLook.Checked=companionDorm;
                 menu.Items[3].Text=PetText.Pat;menu.Items[4].Text=PetText.Hop;
                 sleep.Text=motion==Motion.Sleep?PetText.Wake:PetText.Nap;
                 wardrobe.Text=PetText.Outfit;for(int i=0;i<Names.Length;i++)wardrobe.DropDownItems[i].Text=Names[i];
@@ -149,11 +154,21 @@ namespace CodexPet
             if(motion==Motion.Docked)Expand();
             Rectangle area=Work;int center=Left+Width/2,bottom=Top+Height-Pad;
             ClearMovement();motion=Motion.Idle;paused=false;
-            if(enabled){previousSkin=skin;skin="classic";if(companionRenderer==null)companionRenderer=new CompanionRenderer();}
+            if(enabled){previousSkin=skin;skin="classic";if(companionRenderer==null)companionRenderer=new CompanionRenderer(companionDorm);}
             else skin=previousSkin;
             companion=enabled;Render();
             Location=new Point(Clamp(center-Width/2,area.Left,area.Right-Width),Clamp(bottom-Height+Pad,area.Top,area.Bottom-Height+Pad));
             preciseY=Top;motion=!companion && Top<Floor?Motion.Fall:Motion.Idle;UpdateInput();
+        }
+        internal void SetCompanionOutfit(bool dorm)
+        {
+            if(companionDorm!=dorm)
+            {
+                CompanionRenderer next=new CompanionRenderer(dorm),previous=companionRenderer;
+                companionRenderer=next;companionDorm=dorm;if(previous!=null)previous.Dispose();
+            }
+            if(!companion)SetCompanion(true);else Render();
+            refreshLanguage();
         }
         void UpdateInput()
         {
@@ -354,7 +369,7 @@ namespace CodexPet
         void SetupChecks()
         {
             if(String.IsNullOrEmpty(evidence))throw new ArgumentException("--check requires an output directory");
-            Directory.CreateDirectory(evidence);File.WriteAllText(Path.Combine(evidence,"checks.txt"),PetText.AppName+" 0.3.3 / "+PetText.Language+" / "+Environment.OSVersion+Environment.NewLine);
+            Directory.CreateDirectory(evidence);File.WriteAllText(Path.Combine(evidence,"checks.txt"),PetText.AppName+" 0.3.7 / "+PetText.Language+" / "+Environment.OSVersion+Environment.NewLine);
             checks.Enqueue(delegate{bank.VerifyMasks(Assert);});
             foreach(string value in Skins)
             {
@@ -447,7 +462,7 @@ namespace CodexPet
             protected override bool ShowWithoutActivation {get{return true;}}
         }
         protected override void Dispose(bool disposing)
-        {if(disposing){timer.Stop();timer.Dispose();companionInput.Dispose();if(companionRenderer!=null)companionRenderer.Dispose();tray.Visible=false;tray.Dispose();menu.Dispose();if(frame!=null)frame.Dispose();bank.Dispose();if(petIcon!=null)petIcon.Dispose();}base.Dispose(disposing);}
+        {if(disposing){timer.Stop();timer.Dispose();companionInput.Dispose();if(companionRenderer!=null)companionRenderer.Dispose();tray.Visible=false;tray.Dispose();menu.Dispose();if(frame!=null)frame.Dispose();bank.Dispose();if(petIcon!=null)petIcon.Dispose();if(trayIcon!=null)trayIcon.Dispose();}base.Dispose(disposing);}
     }
 }
 

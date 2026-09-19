@@ -178,3 +178,34 @@ ZIP 全部条目成功读取，单一 v0.1.0 根目录，仅 EXE、使用说明�
 - Final release EXE passed 177 diagnostic assertions in each language, 62 input/render checks, 28 free-placement checks, 27 edge checks, 54 language/state/persistence checks and 36 English/native menu layout checks. Reviewed native Chinese/English menus and the language picker. Persistence tests use a private temporary path; diagnostics do not read or write the real user preference.
 - These are method-driven state tests, actual native-composition captures and isolated file-persistence checks. No new claim of physical dragging, specific-game, anti-cheat, mixed-DPI/multi-monitor or long-run acceptance.
 - Release binary: releases/v0.3.3/MichelePet.exe. Runtime and full-project packages are built from the tested EXE and reviewed public source inventory. Private screenshots, reference galleries, preferences and compiled probes are excluded. Older packages remain unchanged. Download verification is recorded locally after publication.
+
+
+## v0.3.4 icon — 2026-09-19
+
+- Added a generated Michele portrait badge based on the existing classic outfit. Preserved the generated PNG and encoded nine sizes (16, 20, 24, 32, 40, 48, 64, 128, 256) in a 32-bit DIB ICO. DIB frames avoid the .NET Framework small-PNG-icon decoding issue found during validation.
+- The EXE contains the icon as a Windows resource and a managed resource. The window uses a 32-pixel portrait; the tray selects SystemInformation.SmallIconSize. Both icon objects are disposed on exit. Character animation and bilingual behavior are unchanged.
+- Final EXE passed 20 icon checks: Windows shell extraction at every size matches the source ICO, and window/tray resources match the portrait. Extracted 16/32/256-pixel icons were visually reviewed. Also passed 62 input/render, 28 placement, 27 edge and 54 language/persistence checks. No new physical-drag or multi-monitor coverage claimed.
+- Local delivery: releases/v0.3.4/MichelePet.exe, runtime ZIP and full-project ZIP. The existing bilingual desktop shortcut is updated to this EXE after verification; its old target is backed up. Historical packages are retained. v0.3.4 has not been published to GitHub.
+
+
+## v0.3.5 companion outfits — 2026-09-19
+
+- Both companions use rounded cream keycaps, cat-ear mouse mats and paw details. Classic has a cool blue palette; the dorm variant has warm cream/orange. Keyboard rotation and key contact geometry are preserved.
+- Added a layered 2D dorm companion based on the official 喵萌元气 artwork, with independently generated bare hands. The user requested an official dorm outfit without specifying its name; this choice was communicated as an assumption. The source reference stays local and is excluded from distribution. This is fan artwork, not an official model or Live2D rig.
+- The bilingual Gaming Buddy Outfit submenu switches poses while preserving location, size, pause and input-link state. Exiting restores the prior normal outfit. Companion outfit choice lasts for the session.
+- The final EXE passed 62 input/render, 28 placement, 27 edge, 54 language, 39 English layout, 21 companion outfit checks and 177 diagnostic assertions. Render and native-window images were reviewed on light/dark backgrounds, including dorm sizes 160/240/360. Tests use method-driven actions and menu invocation; this does not claim new physical-input, actual-game or multi-monitor coverage.
+- Local v0.3.5 delivery includes runtime and full-project ZIPs with byte/hash/CRC/source-manifest checks. Existing historical packages are retained. GitHub remains at v0.3.3; v0.3.5 has not been published.
+
+## v0.3.6 long hair — 2026-09-19
+
+- Reduced bulky twin-tail roots and outward curls in both Gaming Buddy body sprites, retaining long hair, existing costume/face placement, sleeves and the independent hand atlases. Original sprites remain in assets/companion; new versioned artwork and edit brief are recorded in longhair-manifest.json. Generated with built-in imagegen, original RGBA retained.
+- Final EXE: 31,980,544 bytes; SHA-256 CFE5140886790EA71AF22801B3621179A1B07ADAED644287151A35721C53E9B8. Passed 62 input/render checks and 21 two-outfit checks. Reviewed classic composition and native dorm on a dark background, including style/size/placement behavior from the existing harness. These are method-driven checks, not physical input. The initial harness invocation failed because its output directory was missing; created that directory and reran successfully without application changes.
+- Started the existing v0.3.5 EXE with --companion for the user's requested functional trial. Process path and responsiveness verified. v0.3.6 is separately built and ready for testing; the running v0.3.5 and its desktop shortcut were left in place to avoid interrupting that trial. No ZIP or GitHub update in this step. Normal pet sprites and icon are unchanged.
+
+- User accepted the v0.3.6 switch: verified final EXE hash, backed up the v0.3.5 desktop shortcut under archives/michele-v036-shortcut, updated its target/icon while preserving arguments, and launched v0.3.6 with --companion. No prior pet process was running. Process path and responsiveness verified; physical interaction awaits the user's trial.
+
+## v0.3.7 final dorm portrait — 2026-09-19
+
+- Final accepted design: Classic Uniform uses the original classic-atlas.png with its twin ponytails. Only the dorm companion uses dorm-body-longhair.png. Both use the rounded desk, keycaps, cat-ear mouse mat and paw details. The application, tray and shortcut icon use the dorm long-hair portrait, calico sleep mask and orange-white outfit; the icon is encoded in nine 32-bit DIB sizes.
+- The final EXE passed 20 icon, 62 input/render, 28 placement, 27 edge, 54 language, 39 English layout and 21 companion outfit checks, plus 177 diagnostic assertions. Embedded resources were hash-matched to original Classic, long-hair Dorm and the dorm ICO. Native icon extraction at 32/256 pixels, classic composition and the dorm desktop composition were visually reviewed. Input/state tests use method calls; actual game and mixed-DPI multi-monitor compatibility are not claimed.
+- Release delivery uses a whitelist of source files and runtime resources. Official reference images, desktop evidence, personal configuration and rejected interim artwork are excluded. Runtime and full-project archives use single-app roots and carry identical final executable bytes. Checksums and source commit are recorded alongside the release packages. Original local versions remain available for rollback.
