@@ -1,0 +1,30 @@
+{
+  "version": "0.3.8",
+  "generator": "built-in imagegen",
+  "editTarget": "dorm-body-longhair.png",
+  "officialReference": "https://wiki.biligame.com/klbq/鏂囦欢:绫抽洩鍎柯锋潕-鍠佃悓鍏冩皵绔嬬粯.png",
+  "officialReferenceDistributed": false,
+  "prompt": "Match the official dorm hairstyle more closely: reduce the broad hair mass, use compact shoulder-length side layers and small lower black bows gathering two slender long sections. Hair stays close to neck/shoulders instead of fanning outward. Keep long tapering locks, original face, bangs, calico sleep mask, upper-body pose, clothing, elbows and transparent square alignment. Do not copy the official illustration pose or furniture.",
+  "body": {
+    "file": "dorm-body-refined.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "alphaRange": [
+      0,
+      255
+    ],
+    "sha256": "f15b08cd3230c6d88a44f795e269c92f8b0c2ea5a664f75f1daa73f8439670a7",
+    "runtimeBounds": [
+      52,
+      0,
+      290,
+      281.5
+    ],
+    "crop": "full RGBA image"
+  },
+  "classic": "Original classic-atlas.png with twin ponytails; unchanged.",
+  "hands": "dorm-hands.png and existing pivots unchanged.",
+  "selection": "Optional Light Hair style; Original Hair remains selectable with dorm-body-longhair.png."
+}

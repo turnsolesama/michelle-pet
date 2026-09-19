@@ -10,7 +10,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Reflection;
 [assembly: AssemblyTitle("Michele Desktop Pet / 米雪儿桌宠")]
-[assembly: AssemblyVersion("0.3.7.0")]
+[assembly: AssemblyVersion("0.3.8.0")]
 namespace CodexPet
 {
     internal static class Program
@@ -54,7 +54,10 @@ namespace CodexPet
         readonly Queue<Action> checks=new Queue<Action>();
         readonly CompanionInput companionInput=new CompanionInput();
         CompanionRenderer companionRenderer;
-        bool companion,linked=true,companionDorm;
+        bool companion,linked=true,companionDorm,companionRefined;
+        bool companionBlink=true;
+        int companionExpression,companionReaction;
+        double companionEmotionUntil;
         string previousSkin="classic";
         readonly bool diagnostic;
         readonly string evidence;
@@ -87,7 +90,7 @@ namespace CodexPet
             ToolStripMenuItem game=new ToolStripMenuItem(PetText.Companion);game.Click+=delegate{SetCompanion(!companion);};menu.Items.Add(game);
             ToolStripMenuItem link=new ToolStripMenuItem(PetText.Link);link.Click+=delegate{linked=!linked;UpdateInput();Render();};menu.Items.Add(link);
             menu.Items.Add(new ToolStripSeparator());
-            menu.Items.Add(PetText.Pat,null,delegate{Say(PetText.PatReply);});
+            menu.Items.Add(PetText.Pat,null,delegate{if(companion)BuddyReact(1);else Say(PetText.PatReply);});
             menu.Items.Add(PetText.Hop,null,delegate{Jump();});
             ToolStripMenuItem sleep=new ToolStripMenuItem(PetText.Nap);sleep.Click+=delegate{if(motion==Motion.Sleep)Say(PetText.WakeReply);else Sleep();};menu.Items.Add(sleep);
             ToolStripMenuItem wardrobe=new ToolStripMenuItem(PetText.Outfit);
@@ -106,16 +109,23 @@ namespace CodexPet
             chinese.Click+=delegate{SetLanguage(false,true);};english.Click+=delegate{SetLanguage(true,true);};
             language.DropDownItems.Add(chinese);language.DropDownItems.Add(english);menu.Items.Add(language);
             ToolStripMenuItem looks=new ToolStripMenuItem(PetText.CompanionOutfit){Name="companion-outfit"};
-            ToolStripMenuItem classicLook=new ToolStripMenuItem(PetText.Classic),dormLook=new ToolStripMenuItem(PetText.DormOutfit);
+            ToolStripMenuItem classicLook=new ToolStripMenuItem(PetText.Classic),dormLook=new ToolStripMenuItem(PetText.DormOutfit),refinedLook=new ToolStripMenuItem(PetText.DormRefinedOutfit);
             classicLook.Click+=delegate{SetCompanionOutfit(false);};dormLook.Click+=delegate{SetCompanionOutfit(true);};
-            looks.DropDownItems.Add(classicLook);looks.DropDownItems.Add(dormLook);menu.Items.Add(looks);
+            refinedLook.Click+=delegate{SetCompanionStyle(2);};
+            looks.DropDownItems.Add(classicLook);looks.DropDownItems.Add(dormLook);looks.DropDownItems.Add(refinedLook);menu.Items.Add(looks);
+            ToolStripMenuItem interactions=new ToolStripMenuItem(PetText.BuddyInteractions){Name="buddy-interactions"};
+            ToolStripMenuItem patBuddy=new ToolStripMenuItem(PetText.Pat),pokeBuddy=new ToolStripMenuItem(PetText.BuddyPoke),cheerBuddy=new ToolStripMenuItem(PetText.BuddyCheer),neutralBuddy=new ToolStripMenuItem(PetText.BuddyNeutral),blinkBuddy=new ToolStripMenuItem(PetText.BuddyBlink){CheckOnClick=true,Checked=true};
+            patBuddy.Click+=delegate{BuddyReact(1);};pokeBuddy.Click+=delegate{BuddyReact(2);};cheerBuddy.Click+=delegate{BuddyReact(3);};neutralBuddy.Click+=delegate{BuddyReact(0);};blinkBuddy.Click+=delegate{companionBlink=blinkBuddy.Checked;Render();};
+            interactions.DropDownItems.AddRange(new ToolStripItem[]{patBuddy,pokeBuddy,cheerBuddy,neutralBuddy,blinkBuddy});menu.Items.Add(interactions);
             menu.Items.Add(new ToolStripSeparator());ToolStripItem exit=menu.Items.Add(PetText.Exit,null,delegate{Close();});
             refreshLanguage=delegate
             {
                 Text=PetText.AppName;tray.Text=PetText.Tray;
                 game.Text=companionDorm?PetText.DormCompanion:PetText.Companion;link.Text=PetText.Link;
-                looks.Text=PetText.CompanionOutfit;classicLook.Text=PetText.Classic;dormLook.Text=PetText.DormOutfit;
-                classicLook.Checked=!companionDorm;dormLook.Checked=companionDorm;
+                looks.Text=PetText.CompanionOutfit;classicLook.Text=PetText.Classic;dormLook.Text=PetText.DormOutfit;refinedLook.Text=PetText.DormRefinedOutfit;
+                classicLook.Checked=!companionDorm;dormLook.Checked=companionDorm&&!companionRefined;refinedLook.Checked=companionDorm&&companionRefined;
+                interactions.Text=PetText.BuddyInteractions;interactions.Enabled=companion;
+                patBuddy.Text=PetText.Pat;pokeBuddy.Text=PetText.BuddyPoke;cheerBuddy.Text=PetText.BuddyCheer;neutralBuddy.Text=PetText.BuddyNeutral;blinkBuddy.Text=PetText.BuddyBlink;blinkBuddy.Checked=companionBlink;
                 menu.Items[3].Text=PetText.Pat;menu.Items[4].Text=PetText.Hop;
                 sleep.Text=motion==Motion.Sleep?PetText.Wake:PetText.Nap;
                 wardrobe.Text=PetText.Outfit;for(int i=0;i<Names.Length;i++)wardrobe.DropDownItems[i].Text=Names[i];
@@ -154,18 +164,24 @@ namespace CodexPet
             if(motion==Motion.Docked)Expand();
             Rectangle area=Work;int center=Left+Width/2,bottom=Top+Height-Pad;
             ClearMovement();motion=Motion.Idle;paused=false;
-            if(enabled){previousSkin=skin;skin="classic";if(companionRenderer==null)companionRenderer=new CompanionRenderer(companionDorm);}
-            else skin=previousSkin;
+            if(enabled){previousSkin=skin;skin="classic";if(companionRenderer==null)companionRenderer=new CompanionRenderer(companionDorm,companionRefined);}
+            else {skin=previousSkin;companionExpression=companionReaction=0;companionEmotionUntil=0;}
             companion=enabled;Render();
             Location=new Point(Clamp(center-Width/2,area.Left,area.Right-Width),Clamp(bottom-Height+Pad,area.Top,area.Bottom-Height+Pad));
             preciseY=Top;motion=!companion && Top<Floor?Motion.Fall:Motion.Idle;UpdateInput();
         }
         internal void SetCompanionOutfit(bool dorm)
         {
-            if(companionDorm!=dorm)
+            SetCompanionStyle(dorm?1:0);
+        }
+        internal void SetCompanionStyle(int style)
+        {
+            if(style<0 || style>2)throw new ArgumentOutOfRangeException("style");
+            bool dorm=style!=0,refined=style==2;
+            if(companionDorm!=dorm || companionRefined!=refined)
             {
-                CompanionRenderer next=new CompanionRenderer(dorm),previous=companionRenderer;
-                companionRenderer=next;companionDorm=dorm;if(previous!=null)previous.Dispose();
+                CompanionRenderer next=new CompanionRenderer(dorm,refined),previous=companionRenderer;
+                companionRenderer=next;companionDorm=dorm;companionRefined=refined;if(previous!=null)previous.Dispose();
             }
             if(!companion)SetCompanion(true);else Render();
             refreshLanguage();
@@ -220,6 +236,19 @@ namespace CodexPet
             UpdateInput();
         }
         void Say(string line){Ground();words=line;responseUntil=time+2.8;Render();}
+        internal void BuddyReact(int kind)
+        {
+            if(kind<0 || kind>3)throw new ArgumentOutOfRangeException("kind");
+            if(!companion)return;
+            if(kind==0){companionExpression=companionReaction=0;companionEmotionUntil=responseUntil=0;Render();return;}
+            companionExpression=kind==2?2:1;companionReaction=kind;companionEmotionUntil=time+2.6;
+            Say(PetText.BuddyReply(kind,PetText.English));
+        }
+        void BuddyTouch(Point point,int localY)
+        {
+            float x=(point.X-Left-Pad)*400f/(Width-2*Pad),y=(localY-(Height-Pad-petHeight))*300f/petHeight;
+            BuddyReact(y<94 || x<145 || x>252?1:y<165?2:3);
+        }
         void Jump(){Say(PetText.HopReply);jumpUntil=time+.65;}
         void Sleep(){if(companion)SetCompanion(false);Ground();motion=Motion.Sleep;Render();}
         void DockAt(int which,Rectangle area,int center)
@@ -274,6 +303,7 @@ namespace CodexPet
             if(!held)return;bool wasMoved=moved,wasDock=dockDrag;held=moved=dockDrag=false;Capture=false;
             if(wasDock){if(!wasMoved)Expand();return;}
             if(wasMoved)ReleasePet(p);
+            else if(companion)BuddyTouch(p,localY);
             else if(localY>BubbleHeight+petHeight*.8)Jump();else Say(PetText.TouchReply);
             UpdateInput();
         }
@@ -342,7 +372,12 @@ namespace CodexPet
                 else
                 {
                     double lift=time<jumpUntil?Math.Sin((.65-(jumpUntil-time))/.65*Math.PI)*25:0;
-                    if(companion)companionRenderer.Draw(g,new RectangleF(Pad,height-Pad-petHeight,width-2*Pad,petHeight),companionInput);
+                    if(companion)
+                    {
+                        bool activeEmotion=time<companionEmotionUntil;
+                        bool blink=companionBlink&&!held&&!menu.Visible&&(time+1.8)%5.3<.14;
+                        companionRenderer.DrawAnimated(g,new RectangleF(Pad,height-Pad-petHeight,width-2*Pad,petHeight),companionInput,activeEmotion?companionExpression:0,blink,activeEmotion?companionReaction:0,activeEmotion?(float)((companionEmotionUntil-time)/2.6):0);
+                    }
                     else g.DrawImage(sprite,BodyRectangle(sprite,width,height,sleep,lift));
                     if((time<responseUntil||sleep) && !held)
                     {
@@ -369,7 +404,7 @@ namespace CodexPet
         void SetupChecks()
         {
             if(String.IsNullOrEmpty(evidence))throw new ArgumentException("--check requires an output directory");
-            Directory.CreateDirectory(evidence);File.WriteAllText(Path.Combine(evidence,"checks.txt"),PetText.AppName+" 0.3.7 / "+PetText.Language+" / "+Environment.OSVersion+Environment.NewLine);
+            Directory.CreateDirectory(evidence);File.WriteAllText(Path.Combine(evidence,"checks.txt"),PetText.AppName+" 0.3.8 / "+PetText.Language+" / "+Environment.OSVersion+Environment.NewLine);
             checks.Enqueue(delegate{bank.VerifyMasks(Assert);});
             foreach(string value in Skins)
             {

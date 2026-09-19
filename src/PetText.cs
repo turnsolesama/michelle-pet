@@ -6,8 +6,20 @@ namespace CodexPet
     {
         public static bool English;
         public static string CompanionOutfit {get{return English?"Gaming Buddy Outfit":"搭子造型";}}
-        public static string DormOutfit {get{return English?"Feline Energy - Dorm":"喵萌元气 · 宿舍";}}
+        public static string DormOutfit {get{return English?"Feline Energy - Original Hair":"宿舍 · 原版长发";}}
+        public static string DormRefinedOutfit {get{return English?"Feline Energy - Light Hair":"宿舍 · 轻盈长发";}}
         public static string DormCompanion {get{return English?"Gaming Buddy - Dorm":"游戏搭子 · 宿舍";}}
+        public static string BuddyInteractions {get{return English?"Interactions & Expressions":"互动与表情";}}
+        public static string BuddyPoke {get{return English?"Poke Her Cheek":"戳戳脸";}}
+        public static string BuddyCheer {get{return English?"Cheer Her On":"给她加油";}}
+        public static string BuddyNeutral {get{return English?"Relaxed Expression":"恢复自然表情";}}
+        public static string BuddyBlink {get{return English?"Automatic Blinking":"自动眨眼";}}
+        public static string BuddyReply(int kind,bool english)
+        {
+            if(kind==1)return english?"Hehe, that feels nice!":"嘿嘿，好舒服喵～";
+            if(kind==2)return english?"Hey, my cheeks!":"唔，不许一直戳脸啦！";
+            return english?"We can do this!":"收到！一起加油喵！";
+        }
         public static string SettingsPath {get{return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"MichelePet","language.txt");}}
         public static void LoadPreference(string path)
         {
@@ -91,6 +103,7 @@ namespace CodexPet
         public static string Language {get{return English?En.Language:Zh.Language;}}
         public static string TranslateTo(string text,bool english)
         {
+            for(int kind=1;kind<=3;kind++)if(text==BuddyReply(kind,English))return BuddyReply(kind,english);
             string[] from=English?new string[]{En.AppName,En.StartupError,En.Greeting,En.Recall,En.Tray,En.Classic,En.Dessert,En.Heart,En.Magic,En.Companion,En.Link,En.Pat,En.PatReply,En.Hop,En.HopReply,En.Nap,En.Wake,En.WakeReply,En.Outfit,En.Size,En.Small,En.Medium,En.Large,En.Edge,En.Left,En.Right,En.Expand,En.Pause,En.Top,En.Home,En.Exit,En.LinkError,En.LinkErrorTitle,En.TouchReply,En.Sleeping,En.MissingAsset,En.Font,En.Language}:new string[]{Zh.AppName,Zh.StartupError,Zh.Greeting,Zh.Recall,Zh.Tray,Zh.Classic,Zh.Dessert,Zh.Heart,Zh.Magic,Zh.Companion,Zh.Link,Zh.Pat,Zh.PatReply,Zh.Hop,Zh.HopReply,Zh.Nap,Zh.Wake,Zh.WakeReply,Zh.Outfit,Zh.Size,Zh.Small,Zh.Medium,Zh.Large,Zh.Edge,Zh.Left,Zh.Right,Zh.Expand,Zh.Pause,Zh.Top,Zh.Home,Zh.Exit,Zh.LinkError,Zh.LinkErrorTitle,Zh.TouchReply,Zh.Sleeping,Zh.MissingAsset,Zh.Font,Zh.Language};
             string[] to=english?new string[]{En.AppName,En.StartupError,En.Greeting,En.Recall,En.Tray,En.Classic,En.Dessert,En.Heart,En.Magic,En.Companion,En.Link,En.Pat,En.PatReply,En.Hop,En.HopReply,En.Nap,En.Wake,En.WakeReply,En.Outfit,En.Size,En.Small,En.Medium,En.Large,En.Edge,En.Left,En.Right,En.Expand,En.Pause,En.Top,En.Home,En.Exit,En.LinkError,En.LinkErrorTitle,En.TouchReply,En.Sleeping,En.MissingAsset,En.Font,En.Language}:new string[]{Zh.AppName,Zh.StartupError,Zh.Greeting,Zh.Recall,Zh.Tray,Zh.Classic,Zh.Dessert,Zh.Heart,Zh.Magic,Zh.Companion,Zh.Link,Zh.Pat,Zh.PatReply,Zh.Hop,Zh.HopReply,Zh.Nap,Zh.Wake,Zh.WakeReply,Zh.Outfit,Zh.Size,Zh.Small,Zh.Medium,Zh.Large,Zh.Edge,Zh.Left,Zh.Right,Zh.Expand,Zh.Pause,Zh.Top,Zh.Home,Zh.Exit,Zh.LinkError,Zh.LinkErrorTitle,Zh.TouchReply,Zh.Sleeping,Zh.MissingAsset,Zh.Font,Zh.Language};
             for(int i=0;i<from.Length;i++)if(from[i]==text)return to[i];

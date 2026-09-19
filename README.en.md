@@ -1,6 +1,6 @@
-# Michele Desktop Pet — Bilingual v0.3.7
+# Michele Desktop Pet — Bilingual v0.3.8
 
-Classic Uniform keeps its original twin ponytails, while the new Feline Energy dorm pose uses naturally flowing long hair, independent bare hands and an ivory/orange mouse. Both Gaming Buddy desks have rounded keycaps, cat-ear mouse mats and paw details. A dorm long-hair portrait with a soft blue/cream badge appears on the executable, tray and desktop shortcut.
+Classic Uniform keeps its twin ponytails. Both dorm hairstyles are available: **Feline Energy - Original Hair** and **Feline Energy - Light Hair** under **Gaming Buddy Outfit**. The app, tray and shortcut use the refined dorm portrait. Gaming Buddy now includes petting, cheek pokes, cheering and automatic blinking.
 
 Downloads and previous versions: [GitHub Releases](https://github.com/turnsolesama/michelle-pet/releases). Chinese and English are included in one app.
 
@@ -8,7 +8,7 @@ A fan-made Windows desktop companion inspired by Michele from Strinova. Choose *
 
 ## Start
 
-Extract the entire v0.3.7 ZIP and double-click **MichelePet.exe** inside `v0.3.7`. No installation is needed; the app uses Windows .NET Framework 4.x. Exit any running Chinese or older edition first: all editions share a single-instance lock. Right-click the character or tray icon and choose **Exit** to close it.
+Extract the entire v0.3.8 ZIP and double-click **MichelePet.exe** inside `v0.3.8`. No installation is needed; the app uses Windows .NET Framework 4.x. Exit any running Chinese or older edition first: all editions share a single-instance lock. Right-click the character or tray icon and choose **Exit** to close it.
 
 The first launch defaults to Chinese. The **语言 / Language** submenu offers **简体中文** and **English**. Your choice is saved in `%LOCALAPPDATA%/MichelePet/language.txt` and restored next time. Switching preserves outfit, position, size, sleep, edge-peeking and Gaming Buddy states. Use `--lang=en` or `--lang=zh` for a one-launch override. If saving fails, the selected language still applies to the current session.
 
@@ -16,7 +16,7 @@ To start directly in Gaming Buddy mode, add `--companion` to the executable's sh
 
 ## Play
 
-- Click her head or body for a happy expression and a short reply. Click her feet, or choose **Hop**, for a small jump.
+- In normal mode, click her head or body for a happy expression and a short reply. Click her feet, or choose **Hop**, for a small jump.
 - Drag her to move. In normal pet mode she settles at the bottom of the display's work area.
 - Choose **Outfit** for four looks: Classic Uniform, Sweet Dreams, Heart Guardian and Starry Dreamweaver. These are descriptive English labels for this fan project, not verified official English skin names.
 - Choose **Take a Nap** to rest; click her or choose **Wake Up** to wake her. Changing outfits while sleeping keeps her asleep.
@@ -26,13 +26,15 @@ To start directly in Gaming Buddy mode, add `--companion` to the executable's sh
 
 ## Gaming Buddy
 
-Choose **Gaming Buddy - Classic** to place Michele at a keyboard and mouse. Her keyboard hand follows W/A/S/D, Q/E/R/F, Shift, Ctrl and Space, including edge keys. With multiple game keys held, her hand follows the most recently pressed key; the others remain lit. Her mouse hand reacts to relative pointer movement and left/right clicks.
+Click her hair or the top of her head to pet her, her face for a shy pout, or near the desk to cheer her on. The same actions are in **Interactions & Expressions**. Reactions last about 2.6 seconds; petting and cheering add small hearts. Automatic blinking can be disabled, and **Relaxed Expression** clears the reaction. The window stays in place throughout.
+
+Choose a style from **Gaming Buddy Outfit** to place Michele at a keyboard and mouse. Her keyboard hand follows W/A/S/D, Q/E/R/F, Shift, Ctrl and Space, including edge keys. With multiple game keys held, her hand follows the most recently pressed key; the others remain lit. Her mouse hand reacts to relative pointer movement and left/right clicks.
 
 Other letters, numbers, common punctuation, Backspace, Enter and Tab trigger a general tapping animation and illuminate unlabelled key areas. These reactions do not map every character to an individual keycap. The app does not read text from your input fields or IME.
 
 Drag Gaming Buddy anywhere within your display's work area: she stays where you leave her, without falling or automatically docking. **Keyboard / Mouse Input** turns input reactions off while keeping the seated pose. Dragging, opening the menu or pausing temporarily suspends input capture. Leaving the mode restores the previous outfit. Changing outfit, sleeping or manually docking also exits Gaming Buddy.
 
-Choose **Gaming Buddy Outfit → Classic Uniform / Feline Energy - Dorm** for either keyboard/mouse pose. Choosing an outfit enters Gaming Buddy; switching while seated preserves position, size, pause and input-link settings. Outfit selection lasts for the current session; only the language preference is saved. This is layered 2D animation, not a Live2D model. See [Gaming Buddy notes](docs/keyboard-companion.en.md).
+Choose **Gaming Buddy Outfit → Classic Uniform / Feline Energy - Original Hair / Feline Energy - Light Hair** for any keyboard/mouse style. Choosing an outfit enters Gaming Buddy; switching while seated preserves position, size, pause and input-link settings. Outfit selection lasts for the current session; only the language preference is saved. This is layered 2D animation, not a Live2D model. See [Gaming Buddy notes](docs/keyboard-companion.en.md).
 
 ## Privacy and artwork
 
@@ -48,7 +50,7 @@ In the full project folder, run PowerShell:
 ./build.ps1
 ```
 
-The output is `releases/v0.3.7/MichelePet.exe`. One build contains both languages. User-facing strings and preference handling are in `src/PetText.cs`.
+The output is `releases/v0.3.8/MichelePet.exe`. One build contains both languages. User-facing strings and preference handling are in `src/PetText.cs`.
 
 `MichelePet.exe --check <absolute-output-directory>` runs diagnostics and exits. Its output includes screenshots of your desktop; keep that directory private. Local test harness executables are not included in the runtime ZIP.
 

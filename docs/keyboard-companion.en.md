@@ -1,8 +1,12 @@
 # Gaming Buddy notes
 
-v0.3.5 adds **Gaming Buddy Outfit → Classic Uniform / Feline Energy - Dorm**. Both use rounded keycaps, a cat-ear mouse mat and paw decorations; the dorm outfit has separate bare hands and an ivory/orange mouse. Changing the companion outfit preserves placement, size, pause and input-link state. Selecting a normal walking outfit exits Gaming Buddy. Companion outfit choice lasts for the current session.
+v0.3.8 offers **Gaming Buddy Outfit → Classic Uniform / Feline Energy - Original Hair / Feline Energy - Light Hair**. All three use rounded keycaps, a cat-ear mouse mat and paw decorations; the dorm outfit has separate bare hands and an ivory/orange mouse. Changing the companion outfit preserves placement, size, pause and input-link state. Selecting a normal walking outfit exits Gaming Buddy. Companion outfit choice lasts for the current session.
 
 The current implementation uses WinForms, Windows Raw Input and layered PNG artwork. The body and desk stay fixed; the forearms and hands move independently. Palm scale stays constant while the forearms connect the wrists to the sleeves. Keyboard targeting follows the rotated keycaps, including Shift, Ctrl and Space.
+
+## Expressions and touch
+
+Use **Interactions & Expressions** for petting, cheek pokes, cheering, a relaxed expression or the automatic blink toggle. Clicking the head/hair, face and desk respectively triggers those reactions. Facial overlays affect only the eyes and mouth; hair, body, hand scale and desk remain fixed. Reactions expire after about 2.6 seconds. Both dorm hairstyles share the same aligned expression layers. These are layered 2D facial sprites, not Live2D rigging.
 
 ## Input behavior
 
@@ -16,8 +20,8 @@ Gaming Buddy can remain anywhere within the display's work area. The ordinary pe
 
 ## Editing and future work
 
-The runtime artwork is in `assets/companion/classic-atlas.png`, `hands-v3.png`, `dorm-body.png` and `dorm-hands.png`. Their JSON manifests describe the artwork and pivots; `src/CompanionRenderer.cs` contains the drawing geometry. The normal outfit PNGs and transparency cleanup data are in `assets/skins`.
+The runtime artwork is in `assets/companion/classic-atlas.png`, `hands-v3.png`, `dorm-body-longhair.png`, `dorm-body-refined.png` and `dorm-hands.png`. Their JSON manifests describe the artwork and pivots; `src/CompanionRenderer.cs` contains the drawing geometry. The normal outfit PNGs and transparency cleanup data are in `assets/skins`.
 
-Possible future improvements include more outfit-specific desk poses, individual finger animation, blinking and hair physics. A true Live2D version would require separately layered art and a rig; the existing sprite atlas is not a ready-to-use Live2D model. This edition does not add a Live2D runtime or require an external editor.
+Possible future improvements include more outfit-specific desk poses, individual finger animation and hair physics. A true Live2D version would require separately layered art and a rig; the existing sprite atlas is not a ready-to-use Live2D model. This edition does not add a Live2D runtime or require an external editor.
 
 Real-game compatibility, exclusive fullscreen, anti-cheat behavior and mixed-DPI multi-monitor input remain outside the current acceptance coverage.

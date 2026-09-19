@@ -1,0 +1,25 @@
+{
+  "version": "0.3.8",
+  "generator": "built-in imagegen",
+  "editTarget": "michele-dorm.png",
+  "characterReference": "../companion/dorm-body-refined.png",
+  "prompt": "Reduce the dorm icon hair volume to match the refined sprite: thin long sections, lower black bows, more background beside neck and more costume visible. Preserve exact face, eyes, sleep mask, bangs, choker, orange-white neckline, rounded pastel badge and transparent corners. No headset, blue uniform, new text or extra objects.",
+  "files": {
+    "png": "michele-dorm-refined.png",
+    "ico": "michele-dorm-refined.ico"
+  },
+  "sizes": [
+    16,
+    20,
+    24,
+    32,
+    40,
+    48,
+    64,
+    128,
+    256
+  ],
+  "pngSha256": "4e9c388b0ed58956a4d07bd918bb15a2a4177a7d2cdfb8f9a3059a31e9971711",
+  "icoSha256": "e5305e184d8cbb11c60f6762d9d2a34019d9bcf6d04fb34b264ae7b0bd79b414",
+  "conversion": "Multi-size 32-bit DIB ICO encoding only; generated PNG and previous assets preserved."
+}

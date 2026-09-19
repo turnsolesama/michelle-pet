@@ -1,0 +1,44 @@
+{
+  "version": "0.3.8",
+  "generator": "built-in imagegen",
+  "references": [
+    "../classic-atlas.png",
+    "../dorm-body-refined.png"
+  ],
+  "prompt": "Edit facial features only, preserving the exact pose, hair, clothing, transparent canvas and alignment. Happy: closed smiling eyes, gentle blush and a small open smile. Shy: sidelong blue eyes, a small puffed-cheek pout and blush.",
+  "compositing": "Only feathered eye/mouth regions are used at runtime. CompanionExpressions.cs defines the masks; blinking uses only the happy eye patches. Dorm expressions support both original and refined hair bodies.",
+  "files": [
+    {
+      "file": "classic-happy.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "sha256": "40418e5872fd92e1513b35a9dce0d4279ee2723e4bce7ef65350bdbadd59fa0f"
+    },
+    {
+      "file": "classic-shy.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "sha256": "21d126b5ef0d4a5a4375beb54e81c094c3f07ba822cb6437c49d5b14d91b8643"
+    },
+    {
+      "file": "dorm-happy.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "sha256": "14e9bfa468b9376dc7377dd802b520e3aec90b168cfa6a6a30c8aeceb042a9a8"
+    },
+    {
+      "file": "dorm-shy.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "sha256": "6861e2866a8e22d6e8e95d1f1a853cde33ae786cbd184d245e637d566f96bc7b"
+    }
+  ]
+}

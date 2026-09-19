@@ -209,3 +209,11 @@ ZIP 全部条目成功读取，单一 v0.1.0 根目录，仅 EXE、使用说明�
 - Final accepted design: Classic Uniform uses the original classic-atlas.png with its twin ponytails. Only the dorm companion uses dorm-body-longhair.png. Both use the rounded desk, keycaps, cat-ear mouse mat and paw details. The application, tray and shortcut icon use the dorm long-hair portrait, calico sleep mask and orange-white outfit; the icon is encoded in nine 32-bit DIB sizes.
 - The final EXE passed 20 icon, 62 input/render, 28 placement, 27 edge, 54 language, 39 English layout and 21 companion outfit checks, plus 177 diagnostic assertions. Embedded resources were hash-matched to original Classic, long-hair Dorm and the dorm ICO. Native icon extraction at 32/256 pixels, classic composition and the dorm desktop composition were visually reviewed. Input/state tests use method calls; actual game and mixed-DPI multi-monitor compatibility are not claimed.
 - Release delivery uses a whitelist of source files and runtime resources. Official reference images, desktop evidence, personal configuration and rejected interim artwork are excluded. Runtime and full-project archives use single-app roots and carry identical final executable bytes. Checksums and source commit are recorded alongside the release packages. Original local versions remain available for rollback.
+
+## v0.3.8 — expressions and both dorm hairstyles
+
+- Shipping EXE checked with 20 icon, 62 input/render, 28 placement, 27 edge, 54 language, 46 English layout, 21 outfit, 66 expression/interaction checks and 177 diagnostic assertions.
+- All three companion styles retain placement, size and pause across switches; the normal outfit returns on exit. Reactions and dragging remain stationary on release.
+- Happy, shy and blinking face overlays were rendered for every style. Pixel comparisons restrict changes to the face, with exact neutral restoration and unchanged hair, body, desk and hands.
+- Native light/dark compositions at 160, 240 and 360 were captured with a DPI-aware harness. Small English replies, expression seams, hands and the extracted Windows icon were visually reviewed. Evidence remains private.
+- Tests invoke application methods. Physical game input, exclusive fullscreen and mixed-DPI multi-monitor behavior are not claimed as tested.

@@ -55,7 +55,7 @@ internal static class CompanionOutfitRegression
                 Call(pet,"SetLanguage",true,false);
                 Assert((bool)Field(pet,"companionDorm"),"language switch retains dorm outfit");
                 ContextMenuStrip menu=(ContextMenuStrip)Field(pet,"menu");
-                Assert(((ToolStripMenuItem)menu.Items["companion-outfit"]).DropDownItems[1].Text=="Feline Energy - Dorm","dorm menu localizes to English");
+                Assert(((ToolStripMenuItem)menu.Items["companion-outfit"]).DropDownItems[1].Text=="Feline Energy - Original Hair","dorm menu localizes to English");
                 Call(pet,"SetLanguage",false,false);Call(pet,"CaptureEvidence","dorm-native");
                 foreach(int height in new[]{160,240,360})
                 {

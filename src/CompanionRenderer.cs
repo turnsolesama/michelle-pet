@@ -10,6 +10,7 @@ namespace CodexPet
     {
         readonly Bitmap body,forearm,keyboardHand,mouseHand;
         readonly bool dorm;
+        readonly CompanionExpressions expressions;
         readonly PointF armElbow,armWrist,keyWrist,keyContact,mouseWrist,mouseContact;
         readonly Font font=new Font("Segoe UI",7,FontStyle.Bold,GraphicsUnit.Pixel);
         internal static readonly string[] Labels={"W","A","S","D","Q","E","R","F","Shift","Ctrl","Space"};
@@ -17,11 +18,12 @@ namespace CodexPet
             new RectangleF(219,243,15,11),new RectangleF(202,256,15,11),new RectangleF(219,256,15,11),new RectangleF(236,256,15,11),
             new RectangleF(202,243,15,11),new RectangleF(236,243,15,11),new RectangleF(253,243,15,11),new RectangleF(253,256,15,11),
             new RectangleF(176,256,24,11),new RectangleF(176,269,24,11),new RectangleF(202,269,66,11)};
-        internal CompanionRenderer():this(false) {}
-        internal CompanionRenderer(bool dormOutfit)
+        internal CompanionRenderer():this(false,false) {}
+        internal CompanionRenderer(bool dormOutfit):this(dormOutfit,false) {}
+        internal CompanionRenderer(bool dormOutfit,bool refinedHair)
         {
             dorm=dormOutfit;
-            using(var stream=Assembly.GetExecutingAssembly().GetManifestResourceStream(dorm?"Companion.DormBody":"Companion.Classic"))
+            using(var stream=Assembly.GetExecutingAssembly().GetManifestResourceStream(dorm?(refinedHair?"Companion.DormRefinedBody":"Companion.DormBody"):"Companion.Classic"))
             using(Bitmap atlas=new Bitmap(stream))
             {
                 body=dorm?(Bitmap)atlas.Clone():atlas.Clone(new Rectangle(0,0,1055,1024),PixelFormat.Format32bppArgb);
@@ -36,6 +38,7 @@ namespace CodexPet
             armElbow=dorm?new PointF(135,85):new PointF(160,170);armWrist=dorm?new PointF(135,475):new PointF(160,520);
             keyWrist=dorm?new PointF(235,80):new PointF(220,10);keyContact=dorm?new PointF(135,420):new PointF(134,274);
             mouseWrist=dorm?new PointF(190,80):new PointF(180,10);mouseContact=dorm?new PointF(190,360):new PointF(180,250);
+            expressions=new CompanionExpressions(dorm);
         }
         internal static PointF KeyboardContact(CompanionInput input)
         {
@@ -47,9 +50,12 @@ namespace CodexPet
             return new PointF(488-cap.X-cap.Width/2,520-cap.Y-cap.Height/2-input.Amount(key)*1.5f);
         }
         internal void Draw(Graphics g,RectangleF bounds,CompanionInput input)
+        {DrawAnimated(g,bounds,input,0,false,0,0);}
+        internal void DrawAnimated(Graphics g,RectangleF bounds,CompanionInput input,int expression,bool blink,int reaction,float strength)
         {
             GraphicsState saved=g.Save();g.TranslateTransform(bounds.X,bounds.Y);g.ScaleTransform(bounds.Width/400,bounds.Height/300);
             g.DrawImage(body,new RectangleF(52,0,290,281.5f));
+            expressions.Draw(g,new RectangleF(52,0,290,281.5f),expression,blink);
             using(Brush shadow=new SolidBrush(Color.FromArgb(40,15,24,40)))g.FillEllipse(shadow,69,281,264,13);
             FillRound(g,dorm?Color.FromArgb(218,163,104):Color.FromArgb(113,153,187),new RectangleF(64,237,272,52),9);
             FillRound(g,dorm?Color.FromArgb(255,237,211):Color.FromArgb(218,239,248),new RectangleF(64,232,272,51),9);
@@ -92,7 +98,21 @@ namespace CodexPet
             // Separate button lamps remain readable even when the hand covers the mouse.
             using(Brush lamp=new SolidBrush(input.LeftButton||input.LeftPulse>.2?Color.FromArgb(125,232,253):Color.FromArgb(67,93,126)))g.FillEllipse(lamp,109,277,5,3);
             using(Brush lamp=new SolidBrush(input.RightButton||input.RightPulse>.2?Color.FromArgb(245,165,236):Color.FromArgb(67,93,126)))g.FillEllipse(lamp,118,277,5,3);
+            if(strength>0 && reaction!=2)DrawReaction(g,reaction,strength);
             g.Restore(saved);
+        }
+        static void DrawReaction(Graphics g,int reaction,float strength)
+        {
+            int alpha=(int)(Math.Min(1,strength*3)*210);float rise=(1-strength)*12;
+            for(int i=0;i<(reaction==3?4:2);i++)
+            {
+                float x=i%2==0?108-i*3:289+i*3,y=82+i*13-rise;
+                using(Brush brush=new SolidBrush(Color.FromArgb(alpha,i%2==0?Color.LightPink:Color.FromArgb(247,200,105))))
+                using(GraphicsPath heart=new GraphicsPath())
+                {
+                    heart.AddBezier(x,y+4,x-10,y-4,x-7,y-10,x,y-5);heart.AddBezier(x,y-5,x+7,y-10,x+10,y-4,x,y+4);g.FillPath(brush,heart);
+                }
+            }
         }
         static void FillRound(Graphics g,Color color,RectangleF rectangle,float radius)
         {
@@ -131,6 +151,6 @@ namespace CodexPet
         }
         static void DrawTransformed(Graphics g,Bitmap sprite,Matrix matrix)
         {PointF[] corners={new PointF(0,0),new PointF(sprite.Width,0),new PointF(0,sprite.Height)};matrix.TransformPoints(corners);g.DrawImage(sprite,corners);}
-        public void Dispose(){body.Dispose();forearm.Dispose();keyboardHand.Dispose();mouseHand.Dispose();font.Dispose();}
+        public void Dispose(){body.Dispose();forearm.Dispose();keyboardHand.Dispose();mouseHand.Dispose();expressions.Dispose();font.Dispose();}
     }
 }
