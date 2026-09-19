@@ -61,4 +61,3 @@ class CompanionExpressionRegression
         }catch(Exception e){Console.WriteLine(e);Environment.ExitCode=1;}
     }
 }
-

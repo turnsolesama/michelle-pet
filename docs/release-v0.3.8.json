@@ -1,0 +1,38 @@
+{
+  "version": "0.3.8",
+  "sourceCommit": "fcbe8ebe2b62091732334972bf4a9b7535966fb0",
+  "exe": {
+    "bytes": 39490048,
+    "sha256": "981139AE9F132AEF1F00A25C40E48008BC7174A48B966F67F948E051110AD945"
+  },
+  "packages": [
+    {
+      "name": "MichelePet-v0.3.8-win.zip",
+      "bytes": 38808089,
+      "sha256": "9F2469F626935CCFE5C7B47DEFE6C3EE148F88E68F1556296DC92FA80857321B",
+      "downloadUrl": "https://github.com/turnsolesama/michelle-pet/releases/download/v0.3.8/MichelePet-v0.3.8-win.zip",
+      "downloadVerified": true
+    },
+    {
+      "name": "MichelePet-v0.3.8-Full-Project.zip",
+      "bytes": 85619397,
+      "sha256": "491D11842156062F5F3AE283EA76F2D07E09D21431DFF70B161F4AF819434B00",
+      "downloadUrl": "https://github.com/turnsolesama/michelle-pet/releases/download/v0.3.8/MichelePet-v0.3.8-Full-Project.zip",
+      "downloadVerified": true
+    }
+  ],
+  "checks": {
+    "IconRegression": 20,
+    "CompanionRegression": 62,
+    "CompanionPlacementRegression": 28,
+    "LanguageRegression": 54,
+    "EnglishLayoutRegression": 46,
+    "CompanionOutfitRegression": 21,
+    "CompanionExpressionRegression": 66,
+    "edge": 27,
+    "diagnostic": 177
+  },
+  "published": true,
+  "releaseUrl": "https://github.com/turnsolesama/michelle-pet/releases/tag/v0.3.8",
+  "verifiedAtUtc": "2026-09-19T05:22:44.126079+00:00"
+}

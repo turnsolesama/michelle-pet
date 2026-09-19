@@ -2,7 +2,9 @@
 
 Classic Uniform keeps its twin ponytails. Both dorm hairstyles are available: **Feline Energy - Original Hair** and **Feline Energy - Light Hair** under **Gaming Buddy Outfit**. The app, tray and shortcut use the refined dorm portrait. Gaming Buddy now includes petting, cheek pokes, cheering and automatic blinking.
 
-Downloads and previous versions: [GitHub Releases](https://github.com/turnsolesama/michelle-pet/releases). Chinese and English are included in one app.
+**[Download v0.3.8 · Windows bilingual ZIP](https://github.com/turnsolesama/michelle-pet/releases/download/v0.3.8/MichelePet-v0.3.8-win.zip)** · **[Full project ZIP](https://github.com/turnsolesama/michelle-pet/releases/download/v0.3.8/MichelePet-v0.3.8-Full-Project.zip)** · [Release notes](https://github.com/turnsolesama/michelle-pet/releases/tag/v0.3.8) · [Verification record](docs/release-v0.3.8.json)
+
+Both public packages were downloaded again and verified for size, SHA-256, ZIP integrity and executable identity.
 
 A fan-made Windows desktop companion inspired by Michele from Strinova. Choose **语言 / Language → English** from the character or tray menu. Chinese and English are included in the same app; switching updates menus, speech bubbles, tray text and application messages without restarting or moving the pet.
 

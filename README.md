@@ -2,7 +2,9 @@
 
 经典制服保留双马尾；宿舍款同时保留「原版长发」和「轻盈长发」，右键 → **搭子造型** 即可切换。应用、托盘和快捷方式统一使用修改后的轻盈长发宿舍头像。敲键盘模式新增摸头、戳脸、加油与自动眨眼。
 
-下载与历史版本：[GitHub Releases](https://github.com/turnsolesama/michelle-pet/releases)。中英文包含在同一个程序内。
+**[下载 v0.3.8 · 中英双语运行包](https://github.com/turnsolesama/michelle-pet/releases/download/v0.3.8/MichelePet-v0.3.8-win.zip)** · **[完整项目包](https://github.com/turnsolesama/michelle-pet/releases/download/v0.3.8/MichelePet-v0.3.8-Full-Project.zip)** · [发布说明](https://github.com/turnsolesama/michelle-pet/releases/tag/v0.3.8) · [校验记录](docs/release-v0.3.8.json)
+
+两个公开下载包均已重新下载，并核对大小、SHA-256、ZIP 完整性与程序身份。
 
 [English guide](README.en.md)
 
